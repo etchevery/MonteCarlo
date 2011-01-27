@@ -1,0 +1,24 @@
+﻿Build started 11/01/2011 22:50:46.
+     1>Project "C:\Users\Tonio\Documents\EISTI\Lecture Fichier CPP\tinyxml\tinyXmlTestSTL.vcxproj" on node 3 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating ".\tinyXmlTestSTL___Win32_Debug\tinyXmlTestSTL.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W4 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D TIXML_USE_STL /D TUNE /D _CRT_SECURE_NO_WARNINGS /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\tinyXmlTestSTL___Win32_Debug/" /Fd".\tinyXmlTestSTL___Win32_Debug/vc100.pdb" /FR".\tinyXmlTestSTL___Win32_Debug\\" /Gd /TP /analyze- /errorReport:prompt xmltest.cpp
+         xmltest.cpp
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\tinyXmlTestSTL___Win32_Debug/tinyXmlTestSTL.exe" /INCREMENTAL:NO /NOLOGO ./Debug_STL/tinyxmld_stl.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:".\tinyXmlTestSTL___Win32_Debug\tinyXmlTestSTL.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\tinyXmlTestSTL___Win32_Debug/tinyXmlTestSTL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE:NO /IMPLIB:".\tinyXmlTestSTL___Win32_Debug\tinyXmlTestSTL.lib" /MACHINE:X86 .\tinyXmlTestSTL___Win32_Debug/xmltest.obj
+         "C:\Users\Tonio\Documents\EISTI\Lecture Fichier CPP\tinyxml\Debug_STL\tinyxmld_STL.lib"
+     1>xmltest.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
+         tinyXmlTestSTL.vcxproj -> C:\Users\Tonio\Documents\EISTI\Lecture Fichier CPP\tinyxml\.\tinyXmlTestSTL___Win32_Debug\tinyXmlTestSTL.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:".\tinyXmlTestSTL___Win32_Debug/tinyXmlTestSTL.exe;#1" /manifest .\tinyXmlTestSTL___Win32_Debug\tinyXmlTestSTL.exe.intermediate.manifest
+       BscMake:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\tinyXmlTestSTL___Win32_Debug/tinyXmlTestSTL.bsc" .\tinyXmlTestSTL___Win32_Debug\xmltest.sbr
+       FinalizeBuildStatus:
+         Deleting file ".\tinyXmlTestSTL___Win32_Debug\tinyXmlTestSTL.unsuccessfulbuild".
+         Touching ".\tinyXmlTestSTL___Win32_Debug\tinyXmlTestSTL.lastbuildstate".
+     1>Done Building Project "C:\Users\Tonio\Documents\EISTI\Lecture Fichier CPP\tinyxml\tinyXmlTestSTL.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.92

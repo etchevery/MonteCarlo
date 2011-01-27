@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<Sphere rayon="0.3" x="3.5" y="52.1" z="4.2">
+	<Material>
+		<DiffuseColor red="0.2" green="0.2" blue="0.2" />
+		<SpecularColor red="1" green="1" blue="1" exponent="50" />
+		<ReflectiveColor red="0.7" green="0.7" blue="0.7" />
+	</Material>
+</Sphere>
