@@ -12,6 +12,16 @@ Rayon::Rayon(void)
 	z_direction=0;
 }
 
+Rayon::Rayon(double px, double py, double pz, double dx, double dy, double dz)
+{
+	x_position=px;
+	y_position=py;
+	z_position=pz;
+	x_direction=dx;
+	y_direction=dy;
+	z_direction=dz;
+}
+
 
 Rayon::~Rayon(void)
 {

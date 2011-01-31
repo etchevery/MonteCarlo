@@ -17,4 +17,18 @@ typedef struct intersect_record_struct {
 
 } Intersection;
 
+static void afficher(Intersection inter)
+{
+	if(inter.distance>=DBL_MAX){
+		cout << "pas d'intersection" <<endl;
+	}else{
+		cout<<"Intersection ---> ";
+		inter.objet->afficher();
+		cout<<"Point d'intersection ---> ";
+		inter.point.afficher();
+		cout<<"Distance: " << inter.distance << endl; 
+		cout<<"Surface Normal ---> " ;
+		inter.surfaceNormal.afficher();
+	}
+}
 #endif

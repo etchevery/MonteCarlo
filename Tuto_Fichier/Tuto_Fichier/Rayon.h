@@ -15,6 +15,7 @@ private :
 public:
 	Rayon(void);
 	~Rayon(void);
+	Rayon(double px, double py, double pz, double dx, double dy, double dz);
 	void setPosition(double x,double y,double z);
 	void setDirection(double x,double y, double z);
 	vector3 getPosition();

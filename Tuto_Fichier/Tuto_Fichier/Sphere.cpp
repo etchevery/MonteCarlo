@@ -88,9 +88,19 @@ Intersection Sphere::intersection(Rayon* r)
 								  t * r->getDirection().z + r->getPosition().z);
 
 			  inter.distance = (inter.point-r->getPosition()).Length();
-
+			  //il y a intersection on calcul la normal à ce point d'intersection
+			  vector3 normal=this->normale(inter.point);
+			  //on normalise la normale
+			  normal.Normalize();
+			  inter.surfaceNormal=normal;
 			}
 	  }
+
 	  	 //TODO: la normale 
 	  return (inter);
     }
+
+	vector3 Sphere::normale(vector3 p)
+	{
+		return p-(*this).getCentre();
+	}

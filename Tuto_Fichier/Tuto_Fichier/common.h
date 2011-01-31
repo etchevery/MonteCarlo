@@ -39,6 +39,7 @@ public:
 	double Length() { return (double)sqrt( x * x + y * y + z * z ); }
 	double SqrLength() { return x * x + y * y + z * z; }
 	double Dot( vector3 a_V ) { return x * a_V.x + y * a_V.y + z * a_V.z; }
+	vector3 vector_product(vector3 v){ return vector3(y*v.z-z*v.y,z*v.x-x*v.z,x*v.y-y*v.x); };
 	vector3 Cross( vector3 b ) { return vector3( y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x ); }
 	void operator += ( vector3& a_V ) { x += a_V.x; y += a_V.y; z += a_V.z; }
 	void operator += ( vector3* a_V ) { x += a_V->x; y += a_V->y; z += a_V->z; }
@@ -61,6 +62,7 @@ public:
 		struct { double r, g, b; };
 		struct { double cell[3]; };
 	};
+	void afficher(){cout << "Point: " << "(" << x << "," << y << "," << z << ")" << endl;}
 };
 
 class plane

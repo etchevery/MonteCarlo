@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Plan.h"
 
-
 Plan::Plan(){
 	
 	this->x=0;
@@ -9,11 +8,13 @@ Plan::Plan(){
 	this->z=0;
 }
 
-Plan::Plan(double param_x,double param_y,double param_z){
+
+Plan::Plan(double param_x,double param_y,double param_z,double param_norm){
 	
 	this->x=param_x;
 	this->y=param_y;
 	this->z=param_z;
+	this->norm=param_norm;
 }
 
 Plan::~Plan(){
@@ -31,6 +32,8 @@ void Plan::initFromXML(TiXmlHandle hObj){
 	this->setX(x);
 	this->setY(y);
 	this->setZ(z);
+
+	//this->setNorm(norm);
 }
 void Plan::afficher(){
 
@@ -39,27 +42,34 @@ void Plan::afficher(){
 	Objet::afficher();
 }
 
+
 Intersection Plan::intersection (Rayon* r)
   {
 
-	/* Pour un plan, x=0
-	 * Donc  dx.t+px=0 => t= px/dx si dx!=0 
-	 */
+
 
 	Intersection inter;
 	double t;
 
 	 inter.objet=this;
   
-
+	/* Pour un plan, x=0
+	 * Donc  dx.t+px=0 => t= -px/dx si dx!=0 
+	 */
 	 if(r->getDirection().x!=0){
-		 t=r->getPosition().x/r->getDirection().x; 
+		 t=-r->getPosition().x/r->getDirection().x; 
 		if(t>EPSILON){
 		    inter.point=vector3(0.0,
-						  t * r->getDirection().y + r->getPosition().y,
-						  t * r->getDirection().z + r->getPosition().z);
+								t * r->getDirection().y + r->getPosition().y,
+								t * r->getDirection().z + r->getPosition().z);
 
 		    inter.distance = (inter.point-r->getPosition()).Length();
+			  //il y a intersection on calcul la normal à ce point d'intersection
+			vector3 normal=this->normale();
+			  //on normalise la normale
+			  normal.Normalize();
+			  inter.surfaceNormal=normal;
+
 		}else{
 			inter.distance = DBL_MAX;
 		}
@@ -67,7 +77,10 @@ Intersection Plan::intersection (Rayon* r)
 		 inter.distance = DBL_MAX;
 	 }
 
-	 //TODO: la normale 
-
 	 return(inter);
   }
+
+	vector3 Plan::normale()
+	{
+		return vector3(this->x,this->y,this->z);
+	}

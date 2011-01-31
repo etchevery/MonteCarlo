@@ -49,12 +49,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Tonio\Documents\EISTI\Lecture Fichier CPP\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\CheikAhamed\Documents\Developper\EISTI\OpenGL\MonteCarlo\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Tonio\Documents\EISTI\Lecture Fichier CPP\tinyxml\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\CheikAhamed\Documents\Developper\EISTI\OpenGL\MonteCarlo\tinyxml\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>tinyxmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -78,6 +78,8 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cube.h" />
+    <ClInclude Include="Cylindre.h" />
     <ClInclude Include="Intersection.h" />
     <ClInclude Include="Rayon.h" />
     <ClInclude Include="common.h" />
@@ -90,6 +92,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Cylindre.cpp" />
     <ClCompile Include="Rayon.cpp" />
     <ClCompile Include="Materiau.cpp" />
     <ClCompile Include="Objet.cpp" />

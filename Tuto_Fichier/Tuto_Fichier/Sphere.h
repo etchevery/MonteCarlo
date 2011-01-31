@@ -23,6 +23,7 @@ public :
 	double getX(){return centre_x;};
 	double getY(){return centre_y;};
 	double getZ(){return centre_z;};
+	vector3 getCentre(){ return vector3(centre_x,centre_y,centre_z); }
 	void setRayon(double r){rayon=r;};
 	void setX(double x){centre_x=x;};
 	void setY(double y){centre_y=y;};
@@ -32,6 +33,7 @@ public :
 	void afficher();
 
 	Intersection intersection(Rayon* r);
+	vector3 normale(vector3 p);
 };
 
 #endif // SPHERE_H
