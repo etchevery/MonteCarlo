@@ -14,13 +14,13 @@ static void test_intersecteur(Scene maScene)
 	Objet** tab = maScene.getObjets();
 
 Rayon Rs=Rayon(0.0,0.0,0.0,1.0,1.0,1.0);
-//Rs.afficher();
+Intersection Is;
+Is=tab[0]->intersect(&Rs);
+Is.afficher();
 
 Plan P=Plan(1.0,1.0,1.0,2.0);
-Intersection Is;
-Is=P.intersect(&Rs);
-Is.afficher();
-/*
+
+
 Rayon Rp=Rayon(1.0,1.0,1.0,-1.0,1.0,0.0);
 Rp.afficher();
 
@@ -28,7 +28,7 @@ Rp.afficher();
 Intersection Ip;
 Ip=tab[1]->intersect(&Rp);
 Ip.afficher();
-*/
+
 
 }
 

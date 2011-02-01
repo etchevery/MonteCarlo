@@ -3,27 +3,29 @@
 
 
 #include "common.h"
+//#include "Objet.h"
+
+class Objet;
 
 class Intersection{
 private:
 	vector3 point;	    // Point d'intersection
 	vector3 normal;	    // Vecteur normal
 	double distance;    //distance entre le rayon et l'objet
-	//Objet* objet;		// objet intersecté
-
+	Objet* objet;		// objet intersecté
 public:
 	Intersection();
 	~Intersection();
-	//Intersection(Objet* obj);
+	Intersection(Objet* obj);
 	vector3 getPoint();
 	vector3 getNormal();
 	double getDistance();
-	//Objet* getObjet();
+	Objet* getObjet();
 
 	void setPoint(vector3 pt);
 	void setNormal(vector3 norm);
 	void setDistance(double dist);
-	//void setObjet(Objet* obj);
+	void setObjet(Objet* obj);
 
 	void afficher();
 

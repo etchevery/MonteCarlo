@@ -3,10 +3,10 @@
 
 #include "common.h"
 #include "Materiau.h"
-#include "Intersection.h"
 #include "Rayon.h"
 
 
+class Intersection;
 
 class Objet{
 public :
@@ -15,7 +15,7 @@ public :
 	virtual void initFromXML(TiXmlHandle hObj);
 
 	virtual void afficher(){m_mat.afficher();};
-	Intersection intersect(Rayon* r){};
+	virtual Intersection intersect(Rayon* r);
 private :
 	Materiau m_mat;
 };
