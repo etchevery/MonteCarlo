@@ -8,36 +8,37 @@
 
 using namespace std;
 
-static void test_intersecteur()
+static void test_intersecteur(Scene maScene)
 {
-Sphere S=Sphere(1.0,10.0,10.0,10.0);
-S.afficher();
+	int taille = maScene.getNbObjets();
+	Objet** tab = maScene.getObjets();
 
 Rayon Rs=Rayon(0.0,0.0,0.0,1.0,1.0,1.0);
-Rs.afficher();
+//Rs.afficher();
 
+Plan P=Plan(1.0,1.0,1.0,2.0);
 Intersection Is;
-Is=S.intersection(&Rs);
-afficher(Is);
-
+Is=P.intersect(&Rs);
+Is.afficher();
+/*
 Rayon Rp=Rayon(1.0,1.0,1.0,-1.0,1.0,0.0);
 Rp.afficher();
 
-Plan P=Plan(1.0,0.0,0.0,5.0);
-P.afficher();
+
 Intersection Ip;
-Ip=P.intersection(&Rp);
-afficher(Ip);
+Ip=tab[1]->intersect(&Rp);
+Ip.afficher();
+*/
 
 }
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	/*Scene maScene = Scene();
+	Scene maScene = Scene();
 	maScene.chargerScene("SpherePlan.xml");
-	maScene.afficherScene(); */
+	maScene.afficherScene(); 
 
-	test_intersecteur();
+	test_intersecteur(maScene);
 
 	return 0;
 }

@@ -43,7 +43,7 @@ void Sphere::afficher(){
 	Objet::afficher();
 }
 
-Intersection Sphere::intersection(Rayon* r)
+Intersection Sphere::intersect(Rayon* r)
 {
 	Intersection inter;
 	double a;
@@ -58,7 +58,7 @@ Intersection Sphere::intersection(Rayon* r)
 	 * at²+bt+c=0
 	 */
 	 
-	 inter.objet=this;
+	 //inter.setObjet(this);
   
 	 a=pow(r->getDirection().x,2)+pow(r->getDirection().y,2)+pow(r->getDirection().z,2);
 	 b=(r->getDirection().x*r->getPosition().x)+(r->getDirection().y*r->getPosition().y)+(r->getDirection().z*r->getPosition().z);
@@ -67,14 +67,14 @@ Intersection Sphere::intersection(Rayon* r)
 	 delta = pow(b,2)-4*a*c;
 	 
 	  if (delta <= 0) {
-		  inter.distance = DBL_MAX; //distance infinie (pas d'intersection)
+		  inter.setDistance(DBL_MAX); //distance infinie (pas d'intersection)
 	  } else { //deux solutions
 
 		  t1 = (-b + sqrt (delta)) / 2*a;
 		  t2 = (-b - sqrt (delta)) / 2*a;
 
 		  if (t1 <= EPSILON && t2 <= EPSILON){
-			inter.distance = DBL_MAX;
+			inter.setDistance(DBL_MAX);
 		  }else{
 
 			  if ((t1 <= t2 && t1 > EPSILON) || (t2 < t1 && t2 < EPSILON)){
@@ -83,16 +83,16 @@ Intersection Sphere::intersection(Rayon* r)
 				t = t2;
 			  }
 
-			  inter.point=vector3(t * r->getDirection().x + r->getPosition().x,
+			  inter.setPoint(vector3(t * r->getDirection().x + r->getPosition().x,
 								  t * r->getDirection().y + r->getPosition().y,
-								  t * r->getDirection().z + r->getPosition().z);
+								  t * r->getDirection().z + r->getPosition().z));
 
-			  inter.distance = (inter.point-r->getPosition()).Length();
+			  inter.setDistance ( (inter.getPoint()-r->getPosition()).Length() );
 			  //il y a intersection on calcul la normal à ce point d'intersection
-			  vector3 normal=this->normale(inter.point);
+			  vector3 normal=this->normale(inter.getPoint());
 			  //on normalise la normale
 			  normal.Normalize();
-			  inter.surfaceNormal=normal;
+			  inter.setNormal(normal);
 			}
 	  }
 

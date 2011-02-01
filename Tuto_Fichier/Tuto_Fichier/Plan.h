@@ -32,7 +32,7 @@ public :
 
 	void initFromXML(TiXmlHandle hObj);
 	void afficher();
-	Intersection intersection (Rayon* r);
+	Intersection intersect (Rayon* r);
     vector3 normale();
 };
 

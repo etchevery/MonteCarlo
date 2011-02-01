@@ -42,7 +42,7 @@ Cube::Cube(void)
 
 
 
-	Intersection Cube::intersection(Rayon* r)
+	Intersection Cube::intersect(Rayon* r)
 {
 	Intersection inter;
 	double a;
@@ -52,7 +52,7 @@ Cube::Cube(void)
 	double t, t1, t2;
 
 
-	 inter.objet=this;
+	 //inter.setObjet(this);
 
 	 
 	  	 //TODO: la normale 

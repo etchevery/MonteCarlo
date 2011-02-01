@@ -23,7 +23,7 @@ public :
 	void setCentre(vector3 c){this->centre=c;};
 	void setLongueur(double l){this->longueur=l;};
 	void afficher();
-	Intersection intersection (Rayon* r);
+	Intersection intersect (Rayon* r);
     vector3 normale(vector3 p);
 };
 

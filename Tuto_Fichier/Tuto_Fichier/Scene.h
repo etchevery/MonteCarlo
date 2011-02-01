@@ -18,5 +18,7 @@ public:
 	~Scene(void);
 	void chargerScene(const char* pFilename);
 	void afficherScene();
+	Objet** getObjets(){return tab_obj;};
+	int getNbObjets(){return nb_obj;};
 };
 

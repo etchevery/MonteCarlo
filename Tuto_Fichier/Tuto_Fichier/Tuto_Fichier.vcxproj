@@ -94,6 +94,7 @@
   <ItemGroup>
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Cylindre.cpp" />
+    <ClCompile Include="Intersection.cpp" />
     <ClCompile Include="Rayon.cpp" />
     <ClCompile Include="Materiau.cpp" />
     <ClCompile Include="Objet.cpp" />

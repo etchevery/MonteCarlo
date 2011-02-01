@@ -37,7 +37,7 @@ public:
 	double getheight();
 
 	  /* calcule l'intersection entre le rayon r et l'objet*/
-  Intersection intersection (Rayon* r);
+  Intersection intersect (Rayon* r);
   vector3 normale(vector3 p);
   void afficher();
  };

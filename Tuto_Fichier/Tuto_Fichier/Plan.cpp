@@ -21,19 +21,18 @@ Plan::~Plan(){
 }
 
 void Plan::initFromXML(TiXmlHandle hObj){
-	double x,y,z;
+	double x,y,z,norm;
 	Objet::initFromXML(hObj);
 	TiXmlElement* pElem=hObj.Element();
 
 	pElem->QueryDoubleAttribute("x", &x);
 	pElem->QueryDoubleAttribute("y", &y);
 	pElem->QueryDoubleAttribute("z", &z);
-
+	pElem->QueryDoubleAttribute("norme",&norm);
 	this->setX(x);
 	this->setY(y);
 	this->setZ(z);
-
-	//this->setNorm(norm);
+	this->setNorm(norm);
 }
 void Plan::afficher(){
 
@@ -43,15 +42,12 @@ void Plan::afficher(){
 }
 
 
-Intersection Plan::intersection (Rayon* r)
+Intersection Plan::intersect (Rayon* r)
   {
 
-
-
-	Intersection inter;
+    Intersection inter;
 	double t;
-
-	 inter.objet=this;
+	//inter.setObjet(this);
   
 	/* Pour un plan, x=0
 	 * Donc  dx.t+px=0 => t= -px/dx si dx!=0 
@@ -59,22 +55,22 @@ Intersection Plan::intersection (Rayon* r)
 	 if(r->getDirection().x!=0){
 		 t=-r->getPosition().x/r->getDirection().x; 
 		if(t>EPSILON){
-		    inter.point=vector3(0.0,
+			inter.setPoint(vector3(0.0,
 								t * r->getDirection().y + r->getPosition().y,
-								t * r->getDirection().z + r->getPosition().z);
+								t * r->getDirection().z + r->getPosition().z));
 
-		    inter.distance = (inter.point-r->getPosition()).Length();
+			inter.setDistance( (inter.getPoint()-r->getPosition()).Length() );
 			  //il y a intersection on calcul la normal à ce point d'intersection
 			vector3 normal=this->normale();
 			  //on normalise la normale
 			  normal.Normalize();
-			  inter.surfaceNormal=normal;
+			  inter.setNormal(normal);
 
 		}else{
-			inter.distance = DBL_MAX;
+			inter.setDistance(DBL_MAX);
 		}
 	 }else{
-		 inter.distance = DBL_MAX;
+		 inter.setDistance(DBL_MAX);
 	 }
 
 	 return(inter);

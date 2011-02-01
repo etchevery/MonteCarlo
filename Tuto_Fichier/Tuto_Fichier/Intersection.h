@@ -1,34 +1,33 @@
-#ifndef INTERSECTIONH
-#define INTERSECTIONH
+#ifndef INTERSECTION_H
+#define INTERSECTION_H
 
-// Forward declarations
-class Primitive;
 
 #include "common.h"
-#include "Objet.h"
 
-
-typedef struct intersect_record_struct {
-
-	vector3 point;			// Point d'intersection
-	vector3 surfaceNormal;	// Vecteur normal
-	Objet* objet;		// objet intersecté
+class Intersection{
+private:
+	vector3 point;	    // Point d'intersection
+	vector3 normal;	    // Vecteur normal
 	double distance;    //distance entre le rayon et l'objet
+	//Objet* objet;		// objet intersecté
 
-} Intersection;
+public:
+	Intersection();
+	~Intersection();
+	//Intersection(Objet* obj);
+	vector3 getPoint();
+	vector3 getNormal();
+	double getDistance();
+	//Objet* getObjet();
 
-static void afficher(Intersection inter)
-{
-	if(inter.distance>=DBL_MAX){
-		cout << "pas d'intersection" <<endl;
-	}else{
-		cout<<"Intersection ---> ";
-		inter.objet->afficher();
-		cout<<"Point d'intersection ---> ";
-		inter.point.afficher();
-		cout<<"Distance: " << inter.distance << endl; 
-		cout<<"Surface Normal ---> " ;
-		inter.surfaceNormal.afficher();
-	}
-}
+	void setPoint(vector3 pt);
+	void setNormal(vector3 norm);
+	void setDistance(double dist);
+	//void setObjet(Objet* obj);
+
+	void afficher();
+
+};
+
+
 #endif
