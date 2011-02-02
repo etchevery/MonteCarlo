@@ -83,6 +83,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Cylindre.h" />
     <ClInclude Include="Intersection.h" />
+    <ClInclude Include="Lumiere.h" />
     <ClInclude Include="Materiau.h" />
     <ClInclude Include="Rayon.h" />
     <ClInclude Include="common.h" />
@@ -98,6 +99,7 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Cylindre.cpp" />
     <ClCompile Include="Intersection.cpp" />
+    <ClCompile Include="Lumiere.cpp" />
     <ClCompile Include="Materiau.cpp" />
     <ClCompile Include="Rayon.cpp" />
     <ClCompile Include="Objet.cpp" />
