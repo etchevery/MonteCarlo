@@ -11,4 +11,11 @@ Lumiere::~Lumiere(void)
 {
 }
 
-void Lumiere::init
+void Lumiere::initFromXML(TiXmlHandle hObj){
+}
+
+void PointLumiere::initFromXML(TiXmlHandle hObj){
+}
+
+void DirectionelleLumiere::initFromXML(TiXmlHandle hObj){
+}

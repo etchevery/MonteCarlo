@@ -37,7 +37,8 @@ class Lumiere {
 
 		// For pathtracing. Implemented only for area Lumieres.
 		virtual void sample(const vector3& fromPoint, const vector3& fromNormal, Couleur& intensity, vector3& incidence);
-    
+		
+		void initFromXML(TiXmlHandle hObj);
     protected:
         Couleur illumination;
 		double falloff[3];		// const, linear quadratic
@@ -55,7 +56,7 @@ class PointLumiere: public Lumiere {
 		PointLumiere(double x, double y, double z, const Couleur color, double cfall=1.0, double lfall=0.0, double qfall=0.0);
 		Rayon getShadowRay(const vector3& startPoint, double bias, Rayon& viewRay);
 		Couleur getIntensity(const vector3& refPoint);
-
+		void initFromXML(TiXmlHandle hObj);
 	private:
 		vector3 position;
 		vector3 getIncidence(const vector3 &point);
@@ -68,7 +69,7 @@ class DirectionelleLumiere: public Lumiere {
     public:
 		DirectionelleLumiere(double x, double y, double z, const Couleur color);
 		Rayon getShadowRay(const vector3& startPoint, double bias, Rayon& viewRay);
-
+		void initFromXML(TiXmlHandle hObj);
 	private:
 		vector3 direction;
 		vector3 getIncidence(const vector3 &point);
