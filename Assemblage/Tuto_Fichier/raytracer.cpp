@@ -4,7 +4,7 @@
 // -----------------------------------------------------------
 
 #include "raytracer.h"
-#include "scene.h"
+#include "Scene.h"
 #include "common.h"
 #include "windows.h"
 #include "winbase.h"
