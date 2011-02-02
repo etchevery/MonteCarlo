@@ -18,8 +18,10 @@ void Scene::chargerScene(const char* pFilename)
 	TiXmlDocument doc(pFilename);
 	bool loadOkay = doc.LoadFile();
 	Objet* obj_tmp;
-	
+	Lumiere* lum_tmp;
+
 	int cpt_obj=0;
+	int cpt_lum=0;
 	if (loadOkay)
 	{
 		printf("\n%s:\n", pFilename);
@@ -42,6 +44,16 @@ void Scene::chargerScene(const char* pFilename)
 		tab_obj = new Objet*[cpt_obj];
 		nb_obj=cpt_obj;
 		cpt_obj=0;
+
+		//Comptage du nombre de lumière
+		pElem=hDoc.FirstChildElement("Lumiere").Element();
+		while (pElem){
+			cpt_lum++;
+			pElem=pElem->NextSiblingElement("Lumiere");
+		}
+		tab_lum = new Lumiere*[cpt_lum];
+		nb_lum=cpt_lum;
+		cpt_lum=0;
 
 
 		//Sphere
@@ -78,6 +90,21 @@ void Scene::chargerScene(const char* pFilename)
 		}else{
 			cerr << "Camera non définie" << endl;
 		}
+		//Lumieres
+		pElem=hDoc.FirstChildElement("Lumiere").Element();
+		while (pElem){
+			if (strcmp(pElem->Attribute("type"),"point")==0){
+				lum_tmp= new PointLumiere();
+			}else{
+				lum_tmp= new DirectionelleLumiere();
+			}
+			hObj=TiXmlHandle(pElem);
+			lum_tmp->initFromXML(hObj);
+			tab_lum[cpt_lum]=lum_tmp;
+			pElem=pElem->NextSiblingElement("Lumiere");
+			cpt_lum++;
+			
+		}
 
 	}
 	else
@@ -92,4 +119,9 @@ void Scene::afficherScene(){
 		tab_obj[i]->afficher();
 	}
 	camera->afficher();
+
+	for (i=0;i<nb_lum;i++){
+		tab_lum[i]->afficher();
+	}
+	cout<<endl<<endl;
 }

@@ -4,13 +4,15 @@
 #include "Sphere.h"
 #include "Plan.h"
 #include "common.h"
+#include "Lumiere.h"
 
 class Scene
 {
 private :
 	int nb_obj;
 	Objet** tab_obj;
-	//Lumiere* tab_lum;
+	int nb_lum;
+	Lumiere** tab_lum;
 	Camera* camera;
 
 public:
@@ -20,5 +22,7 @@ public:
 	void afficherScene();
 	Objet** getObjets(){return tab_obj;};
 	int getNbObjets(){return nb_obj;};
+	Lumiere** getLumieres(){return tab_lum;};
+	int getNbLumieres(){return nb_lum;};
 };
 
