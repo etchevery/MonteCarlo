@@ -6,6 +6,7 @@
 #ifndef I_COMMON_H
 #define I_COMMON_H
 
+#include "stdafx.h"
 #include "math.h"
 #include "stdlib.h"
 #include <tinyxml.h>
@@ -17,7 +18,8 @@ typedef unsigned int Pixel;
 
 inline double Rand( double a_Range ) { return ((double)rand() / RAND_MAX) * a_Range; }
 
-
+#define MIN(A,B) ((A) < (B) ? (A) : (B))
+#define MAX(A,B) ((A) > (B) ? (A) : (B))
 #define DOT(A,B)		(A.x*B.x+A.y*B.y+A.z*B.z)
 #define NORMALIZE(A)	{double l=1/sqrtf(A.x*A.x+A.y*A.y+A.z*A.z);A.x*=l;A.y*=l;A.z*=l;}
 #define LENGTH(A)		(sqrtf(A.x*A.x+A.y*A.y+A.z*A.z))
@@ -28,7 +30,8 @@ inline double Rand( double a_Range ) { return ((double)rand() / RAND_MAX) * a_Ra
 #define TRACEDEPTH		6
 
 #define PI				3.141592653589793238462f
-
+#define UNIFORM			1
+#define IMPORTANCE		2
 class vector3
 {
 public:
