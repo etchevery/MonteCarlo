@@ -211,17 +211,17 @@ Couleur Engine::speculaire(const Intersection& intersection,vector3& incidence, 
 
 Couleur Engine::diffusePropagation(Ray& ray, Intersection& intersection, int depth){
 	//apport de la composante diffuse
-	Couleur diffusComp = intersection.objet->GetReflectance().kD;
+	Couleur diffusComp = intersection.getObjet()->GetReflectance.kD;
 	//nouvelle direction
-	vector3 rayDir = MonteCarlo(intersection.surfaceNormal,1);
+	vector3 rayDir = MonteCarlo(intersection.getNormal(),1);
 	//creation nouveau rayon 
-	Ray newRay(intersection.point,rayDir);
+	Ray newRay(intersection.getPoint(),rayDir);
 	//on relance le calcul avec la nouvelle direction
 	Couleur diffColor = Raytracer(newRay, depth + 1);
 
 	//brdf = kD/PI
 	if (config.echantillonType == UNIFORM)// Probablity: 1/(2PI) -- (1/probability)*cos(theta)*brdf*radiancealongray
-		return 2 * (intersection.surfaceNormal*rayDir)*diffusComp*diffColor;
+		return 2 * (intersection.getNormal().Dot(rayDir))*diffusComp*diffColor;
 	else if (config.echantillonType == IMPORTANCE)// Probability: cos(theta)/PI -- (1/probability)*cos(theta)*brdf*radiancealongray	
 		return diffusComp*diffColor;
 	else return Couleur::black;
@@ -229,36 +229,36 @@ Couleur Engine::diffusePropagation(Ray& ray, Intersection& intersection, int dep
 
 Couleur Engine::speculairePropagation(Ray& ray, Intersection& intersection, int depth){
 	//apport de la composante spécaulaire
-	Reflectance refl = intersection.getObjet()->GetReflectance.kS;
+	Reflectance refl = intersection.getObjet()->GetReflectance;
 	//direction réfléchie
 	vector3 reflexionDir = rayonReflexion(ray.GetDirection(), intersection.getNormal());
 	NORMALIZE(reflexionDir);
 	//nouvelle direction
 	vector3 rayDir = MonteCarlo(reflexionDir, refl.pExp);
     //creation nouveau rayon 
-    Ray newRay(intersection.point,rayDir);
+	Ray newRay(intersection.getPoint(),rayDir);
 	//on relance le calcul avec la nouvelle direction
     Couleur specColor = Raytracer(newRay,depth+1);
     
 	// brdf = kS(pExp+1)/(2PI)
 	if (config.echantillonType == UNIFORM)
 		// Probablity: 1/(2PI) -- (1/probability)*cos(theta)*brdf*radiancealongray
-		return pow(rayDir.Dot(reflexionDir),(float)refl.pExp) * (rayDir * intersection.getNormal()) * refl.kS * (refl.pExp+1) * specColor;
+		return pow(rayDir.Dot(reflexionDir),refl.pExp) *(rayDir.Dot(intersection.getNormal()) * refl.kS * (refl.pExp+1) * specColor;
 	else if (config.echantillonType == IMPORTANCE)
 		// Probability: cos^pExp(theta)*(pExp+1)/(2PI) -- (1/probability)*cos(theta)*brdf*radiancealongray
-		return refl.kS * specColor*(rayDir*intersection.getNormal());
+		return refl.kS * specColor*(rayDir.Dot(intersection.getNormal()));
 	else return Couleur::black;
 }
 
 
 Couleur Engine::reflexionPropagation(Ray& ray, Intersection& intersection, int depth){
 	Couleur reflColor;
-	Reflectance refl = intersection.objet->GetReflectance();
+	Reflectance refl = intersection.getObjet()->GetReflectance;
 	vector3 rayDirection = ray.GetDirection();
 	//direction réfléchie
 	vector3 reflectDirection = rayonReflexion(rayDirection,intersection.getNormal());
 	//nouveau rayon aprés réflexion
-	Ray newRayon(intersection.point,reflectDirection);
+	Ray newRayon(intersection.getPoint(),reflectDirection);
 	//on relance
 	reflColor = Raytracer(newRayon,depth+1);
 
@@ -289,7 +289,7 @@ bool Engine::calculRefraction(Ray& ray, Intersection& intersection, Ray& refrRay
 	direction.Normalize();
 	vector3 normal = intersection.getNormal();
 
-	Reflectance refl = intersection.objet->GetReflectance();
+	Reflectance refl = intersection.getObjet()->GetReflectance;
 	double index = refl.indiceRefraction;
 
 	if (isOut(direction,normal)){//si va dedans
@@ -308,7 +308,7 @@ bool Engine::calculRefraction(Ray& ray, Intersection& intersection, Ray& refrRay
 	d.Normalize();
 	vector3 rd = refractDirection;
 	rd.Normalize();
-	refrRay = Ray(intersection.point,refractDirection);
+	refrRay = Ray(intersection.getPoint(),refractDirection);
 	schlick = calculSchlick(n, nt, d, rd,intersection.getNormal());
 	}
 	return refracted;
@@ -341,8 +341,8 @@ double Engine::calculSchlick(double n, double nt, vector3& rayDir, vector3& refr
 	return F0 + (1-F0)*pow(c,5);
 }
 
-Couleur Engine::refractionPropagation(Ray& ray, const Intersection& intersection, int depth) {
-	Reflectance refl = intersection.objet->GetReflectance();
+Couleur Engine::refractionPropagation(Ray& ray,const Intersection& intersection, int depth) {
+	Reflectance refl = intersection.getObjet()->GetReflectance;
 	Couleur coef = refl.kT;
 	return coef * Raytracer(ray, depth+1);
 }
