@@ -1,10 +1,16 @@
 <?xml version="1.0" ?>
 <Sphere rayon="1.0" x="10.0" y="10.0" z="10.0">
-	<Materiau red="0.2" green="0.2" blue="0.2" Diff="0.6" Refl="0.7"/>
+	<Materiau BRDF="Emissive" Phong="0.6" Refr="0.7">
+			<kD red="0.4" green="0.3" blue="0.2" />
+			<kT red="0.2" green="0.1" blue="0.3" />
+	</Materiau>
 </Sphere>
 
 <Plan x="1.5" y="2.1" z="5.2" norme="5.0">
-	<Materiau red="0.4" green="0.3" blue="0.2" Diff="0.6" Refl="0.7"/>
+	<Materiau BRDF="Diffuse" Phong="0.6" Refr="0.7">
+			<kD red="0.4" green="0.3" blue="0.2" />
+			<kT red="0.2" green="0.1" blue="0.3" />
+	</Materiau>
 </Plan>
 
 <Camera x_pos="1.0" y_pos="0.1" z_pos="0.5" x_look="1.0" y_look="1.0" z_look="1.0"/>

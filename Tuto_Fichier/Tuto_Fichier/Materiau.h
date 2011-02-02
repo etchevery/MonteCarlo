@@ -1,22 +1,53 @@
-#pragma once
+#ifndef MATERIAUXH
+#define MATERIAUXH
+
 #include "common.h"
-class Materiau
-{
-public:
-	Materiau();
-	void SetColor( Color& a_Color ) { m_Color = a_Color; }
-	Color GetColor() { return m_Color; }
-	void SetDiffuse( double a_Diff ) { m_Diff = a_Diff; }
-	void SetReflection( double a_Refl ) { m_Refl = a_Refl; }
-	double GetSpecular() { return 1.0f - m_Diff; }
-	double GetDiffuse() { return m_Diff; }
-	double GetReflection() { return m_Refl; }
-	void initFromXML(TiXmlHandle hObj);
-	void afficher();
-private:
-	Color m_Color;
-	double m_Refl;
-	double m_Diff;
+#include "Couleur.h"
+#include <string>
+
+using namespace std;
+
+
+/* Types de BRDF */
+enum BRDFType{
+	Emissive,
+	Diffuse,
+	Glossy,
+	Mirror,
+	Dielectric
 };
 
+/* Structure pour la reflectance du materiaux */
+typedef struct reflectance_struct {
+
+	BRDFType type;		// Type de BRDF 
+	Couleur kE;			// Emissive
+	Couleur kD;			// Diffuse
+	Couleur kS;			// Speculaire reflection
+	Couleur kR;			// Mirroir reflection
+    Couleur kT;        //refraction
+    double indiceRefraction; // Indice de refraction
+	double pExp;		// Phong puissance
+} Reflectance;
+
+
+
+/* Material objects hold information one might need
+   about the material of an object in a Scene. */
+class Materiau {
+
+protected:
+	Reflectance myReflectance;
+
+public:
+
+	/* Constructeurs */
+	Materiau();
+	Materiau(Reflectance reflec);
+	Reflectance getReflectance(){return myReflectance;};
+
+	void initFromXML(TiXmlHandle hObj);
+	void afficher();
+};
+#endif
 

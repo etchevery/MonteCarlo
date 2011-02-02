@@ -22,7 +22,14 @@ Rayon::Rayon(double px, double py, double pz, double dx, double dy, double dz)
 	z_direction=dz;
 }
 
-
+Rayon::Rayon(vector3 point,vector3 dir){
+	x_position=point.x;
+	y_position=point.y;
+	z_position=point.z;
+	x_direction=dir.x;
+	y_direction=dir.y;
+	z_direction=dir.z;
+}
 Rayon::~Rayon(void)
 {
 }
