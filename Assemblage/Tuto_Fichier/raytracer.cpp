@@ -163,7 +163,7 @@ Couleur Engine::Raytracer( Ray& a_Ray, int a_Depth){
 	return couleur;
 }
 
-Couleur Engine::directeIllumination(Ray& ray,const Intersection& intersection,Reflectance refl)
+Couleur Engine::directeIllumination(Ray& ray,Intersection& intersection,Reflectance refl)
 {
 	Couleur couleur;
 	vector<Lumiere*> lumiere = maScene->getLumieres();
@@ -192,14 +192,14 @@ bool Engine::intersectShadowRay(Ray& ray) {
 }
 
 //calcul de la composante diffuse éclairage direct
-Couleur Engine::diffuse(const Intersection& intersection, const vector3& incidence, const Couleur& color,Reflectance refl) {
+Couleur Engine::diffuse(Intersection& intersection, const vector3& incidence, const Couleur& color,Reflectance refl) {
 	vector3 normale(intersection.getNormal());
 	vector3 incidant(incidence);
 	return refl.kD*color* MAX(normale.Dot(incidant),0.0);
 }
 
 //calcul de la composante speculaire éclairage direct
-Couleur Engine::speculaire(const Intersection& intersection,vector3& incidence, const Couleur& color, Ray& viewRay,Reflectance refl) {
+Couleur Engine::speculaire( Intersection& intersection,vector3& incidence, const Couleur& color, Ray& viewRay,Reflectance refl) {
 	vector3 reflechi =-rayonReflexion(incidence,intersection.getNormal());
 	vector3 vuRay = -viewRay.GetDirection();
 	vuRay.Normalize();

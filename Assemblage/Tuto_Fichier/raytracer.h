@@ -54,10 +54,10 @@ Couleur Raytracer( Ray& ,int );
 	bool intersectShadowRay(Ray& ray);
 
 // Illumination directe
-	Couleur directeIllumination( Ray& ,const Intersection& ,Reflectance);
+	Couleur directeIllumination( Ray& ,Intersection& ,Reflectance);
 //selon type de matériaux (diffus ou spéc)calcul couleure directe
-	Couleur diffuse(const Intersection& intersection, const vector3& incidence, const Couleur& color,Reflectance refl);
-	Couleur speculaire(const Intersection& intersection, vector3& incidence, const Couleur& color, Ray& viewRay,Reflectance refl);
+	Couleur diffuse( Intersection& intersection, const vector3& incidence, const Couleur& color,Reflectance refl);
+	Couleur speculaire( Intersection& intersection, vector3& incidence, const Couleur& color, Ray& viewRay,Reflectance refl);
 
 	// Illumination Indirecte, propagation du rayon
 	Couleur diffusePropagation(Ray& ray, Intersection& intersection, int depth);
