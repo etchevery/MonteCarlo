@@ -1,21 +1,9 @@
-﻿Build started 02/02/2011 21:55:35.
-     1>Project "C:\Users\Tonio\Documents\EISTI\Projet RayTracing95\MonteCarlo\Tuto_Fichier\Tuto_Fichier\Tuto_Fichier.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
-         Creating "Debug\Tuto_Fichier.unsuccessfulbuild" because "AlwaysCreate" was specified.
-       ClCompile:
-         All outputs are up-to-date.
-         All outputs are up-to-date.
-       ManifestResourceCompile:
-         All outputs are up-to-date.
-       Link:
-         All outputs are up-to-date.
-       Manifest:
-         All outputs are up-to-date.
-       FinalizeBuildStatus:
-         Deleting file "Debug\Tuto_Fichier.unsuccessfulbuild".
-         Touching "Debug\Tuto_Fichier.lastbuildstate".
-     1>Done Building Project "C:\Users\Tonio\Documents\EISTI\Projet RayTracing95\MonteCarlo\Tuto_Fichier\Tuto_Fichier\Tuto_Fichier.vcxproj" (build target(s)).
+﻿Build started 02/02/2011 23:13:20.
+     1>Project "D:\My Documents\Ing2\lancer_de_rayon\ProjetFinal\Tuto_Fichier\Tuto_Fichier\Tuto_Fichier.vcxproj" on node 2 (clean target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\Tuto_Fichier.lastbuildstate".
+     1>Done Building Project "D:\My Documents\Ing2\lancer_de_rayon\ProjetFinal\Tuto_Fichier\Tuto_Fichier\Tuto_Fichier.vcxproj" (clean target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.16
+Time Elapsed 00:00:00.39

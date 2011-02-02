@@ -1,5 +1,5 @@
-#ifndef MATERIAUXH
-#define MATERIAUXH
+#ifndef MATERIAUH
+#define MATERIAUH
 
 #include "common.h"
 #include "Couleur.h"
