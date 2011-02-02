@@ -27,6 +27,7 @@ void DirectionelleLumiere::afficher(){
 	Lumiere::afficher();
 	direction.afficher();
 }
+
 void Lumiere::initFromXML(TiXmlHandle hObj){
 	illumination.initFromXML(hObj);
 }
