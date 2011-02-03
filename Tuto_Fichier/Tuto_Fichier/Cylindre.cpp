@@ -74,7 +74,7 @@ Cylindre::Cylindre(void)
 	 * at²+bt+c=0
 	 */
 	 
-	// inter.setObjet(this);
+	 inter.setObjet(this);
   
 	 a=pow(r->getDirection().y,2)+pow(r->getDirection().z,2);
 	 b=(r->getDirection().y*r->getPosition().y)+(r->getDirection().z*r->getPosition().z);

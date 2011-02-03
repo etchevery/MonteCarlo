@@ -13,22 +13,26 @@ static void test_intersecteur(Scene maScene)
 	int taille = maScene.getNbObjets();
 	Objet** tab = maScene.getObjets();
 
+/*
 Rayon Rs=Rayon(0.0,0.0,0.0,1.0,1.0,1.0);
 Intersection Is;
 Is=tab[0]->intersect(&Rs);
 Is.afficher();
-
 Plan P=Plan(1.0,1.0,1.0,2.0);
-
-
 Rayon Rp=Rayon(1.0,1.0,1.0,-1.0,1.0,0.0);
 Rp.afficher();
-
 
 Intersection Ip;
 Ip=tab[1]->intersect(&Rp);
 Ip.afficher();
+*/
 
+	
+	Rayon Rs=Rayon(0.0,0.0,0.0,1.0,1.0,1.0);
+	Rayon Rp=Rayon(1.0,1.0,1.0,-1.0,1.0,1.0);
+	Intersection I;
+cout << "intersection global:" << maScene.intersect(Rs, I) << endl;
+I.afficher();
 
 }
 
@@ -36,7 +40,7 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	Scene maScene = Scene();
 	maScene.chargerScene("SpherePlan.xml");
-	maScene.afficherScene(); 
+	//maScene.afficherScene(); 
 
 	test_intersecteur(maScene);
 

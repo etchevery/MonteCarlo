@@ -125,3 +125,35 @@ void Scene::afficherScene(){
 	}
 	cout<<endl<<endl;
 }
+
+	bool Scene::intersect(Rayon& r, Intersection& I)
+	{
+		int nbObjet = this->getNbObjets();
+		Objet** tab = this->getObjets();
+
+		bool isIntersect = false;  //par défaut pas d'intersection
+		int i; //indice de boucle
+
+		//objet n°1
+		I=tab[0]->intersect(&r);
+		if(I.getDistance()<DBL_MAX)
+		{
+			isIntersect = true;
+		}
+
+		//on parcourt tous les objets
+		for(i=1;i<nbObjet;i++)
+		{
+
+			//si le rayon intersecte l'objet
+			//et si la distance de l'objet en cours est inférieure à celle de l'objet le plus proche
+			if(tab[i]->intersect(&r).getDistance()<DBL_MAX 
+				&& tab[i]->intersect(&r).getDistance()<I.getDistance())
+			{
+				isIntersect = true;
+				I=tab[i]->intersect(&r);
+			}
+		}
+
+		return isIntersect;
+	}
