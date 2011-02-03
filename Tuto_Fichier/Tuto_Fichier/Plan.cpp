@@ -47,7 +47,7 @@ Intersection Plan::intersect (Rayon* r)
 
     Intersection inter;
 	double t;
-	//inter.setObjet(this);
+	inter.setObjet(this);
   
 	/* Pour un plan, x=0
 	 * Donc  dx.t+px=0 => t= -px/dx si dx!=0 
@@ -58,7 +58,6 @@ Intersection Plan::intersect (Rayon* r)
 			inter.setPoint(vector3(0.0,
 								t * r->getDirection().y + r->getPosition().y,
 								t * r->getDirection().z + r->getPosition().z));
-
 			inter.setDistance( (inter.getPoint()-r->getPosition()).Length() );
 			  //il y a intersection on calcul la normal à ce point d'intersection
 			vector3 normal=this->normale();

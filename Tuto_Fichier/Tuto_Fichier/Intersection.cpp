@@ -16,14 +16,17 @@
 	{
 		this->point=vector3();	  
 		this->normal=vector3();	    
-		this->distance=DBL_MAX;   
+		this->distance=DBL_MAX;  
+		this->objet=NULL;
 	}
 
-/*	Intersection::Intersection(Objet* obj, Rayon* r)
+	Intersection::Intersection(Objet* obj)
 	{
-		obj->intersect(r);
-
-	}*/
+		this->point=vector3();	  
+		this->normal=vector3();	    
+		this->distance=DBL_MAX;  
+		this->objet=NULL;
+	}
 
 	Intersection::~Intersection()
 	{
@@ -45,10 +48,10 @@
 		return this->distance;
 	}
 
-	/*Objet* Intersection::getObjet()
+	Objet* Intersection::getObjet()
 	{
 		return this->objet;
-	}*/
+	}
 
 
 	void Intersection::setPoint(vector3 pt)
@@ -66,10 +69,10 @@
 		this->distance=dist;
 	}
 
-	/*void Intersection::setObjet(Objet* obj)
+	void Intersection::setObjet(Objet* obj)
 	{
 		this->objet=obj;
-	}*/
+	}
 
 
 
@@ -79,7 +82,7 @@
 			cout << "pas d'intersection" <<endl;
 		}else{
 			cout<<"Intersection ---> ";
-			//this->objet->afficher();
+			this->objet->afficher();
 			cout<<"Point d'intersection ---> ";
 			this->point.afficher();
 			cout<<"Distance: " << this->distance << endl; 
