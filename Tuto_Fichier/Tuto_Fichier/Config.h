@@ -1,15 +1,11 @@
-#ifndef RENDERSETTINGSH
-#define CONFIGH
+#ifndef CONFIG_H
+#define CONFIG_H
 
 #include <string>
 
 using namespace std;
 
-enum Echantillon
-{
-	UNIFORME,
-	IMPORTANCE1
-};
+enum Echantillon{UNIFORME,IMPORTANCE};
 
 /* Configuration pour le rendu de la scène */
 typedef struct config_render_struct {
@@ -18,8 +14,8 @@ typedef struct config_render_struct {
 	bool indirectLighting;
 	bool russianRoulette;
 	string filename;
-	unsigned int nbLancerParPixel;
-	unsigned int profondeur;
+	 int nbLancerParPixel;
+	 int profondeur;
 } Configuration;
 
 
