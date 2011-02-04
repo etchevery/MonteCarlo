@@ -1,19 +1,6 @@
-// -----------------------------------------------------------
-// raytracer.cpp
-// 2004 - Jacco Bikker - jacco@bik5.com - www.bik5.com -   <><
-// -----------------------------------------------------------
-#include "stdafx.h"
 #include "raytracer.h"
-#include "Scene.h"
-#include "common.h"
-#include "windows.h"
-#include "winbase.h"
-#include "Couleur.h"
-#include "Rayon.h"
-#include "Intersection.h"
-#include <iostream>
+#include "stdafx.h"
 
-using namespace std;
 Engine::Engine(Configuration config)
 {
 	maScene = new Scene();
@@ -104,7 +91,7 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 	Intersection intersection;//stocke les informations sur l'intersection
 
 	// si on ne touche rien on quitte
-	if (!maScene->intersect(a_Ray,&intersection))
+	if (!maScene->intersect(a_Ray,intersection))
 	 return Couleur::black;
 
 	//on récupère les informations de matériaux (couleurs)
@@ -168,16 +155,16 @@ Couleur Engine::directeIllumination(Rayon& ray, Intersection& intersection,Refle
 	//parcourt des lumieres
 	for (int i = 0; i < maScene->getNbLumieres(); i++) {
 		//le rayon entre l'intersection et la lumiere
-		/*Rayon shadowRay = lumiere[i]->getShadowRay(intersection.getPoint(),ray);
+		Rayon shadowRay = lumiere[i]->getShadowRay(intersection.getPoint());
 		//si on a pas d'intersection on calcul l'apport de cette lumiere
 		if (!intersectShadowRay(shadowRay)) {
 			vector3 lightIncidence = shadowRay.getDirection();
 			lightIncidence.Normalize();
 			if (refl.kD != Couleur::black)//si la composante est diffuse
-				couleur += diffuse(intersection, lightIncidence,lumiere[i]->getIntensity(),refl);
+				couleur += diffuse(intersection, lightIncidence,lumiere[i]->getIntensity(intersection.getPoint()),refl);
 			if (refl.kS != Couleur::black)//si la composante est speculaire
-				couleur += speculaire(intersection, lightIncidence,lumiere[i]->getIntensity(),ray,refl);
-		}*/
+				couleur += speculaire(intersection, lightIncidence,lumiere[i]->getIntensity(intersection.getPoint()),ray,refl);
+		}
 	}
 	return couleur;
 }
@@ -277,7 +264,6 @@ bool Engine::isOut(vector3& direction,vector3& normale){
 	return (cosAngle  < 0);
 	}
 
-
 bool Engine::calculRefraction(Rayon& ray, Intersection& intersection, Rayon& refrRay, double& schlick){
 	double n, nt;
 	vector3 refractDirection;
@@ -335,6 +321,7 @@ double Engine::calculSchlick(double n, double nt, vector3& rayDir, vector3& refr
 	if (isOut(rayDir,surfNorm))
 	sens=-1.0;
 	double c = 1.0 - (sens*(refrDir.Dot(surfNorm)));
+	//formule schlick
 	return F0 + (1-F0)*pow(c,5);
 }
 
@@ -352,9 +339,8 @@ void Engine::InitRender()
 {
 	// screen plane in world space coordinates
 	m_WX1 = -4, m_WX2 = 4, m_WY1 = m_SY = 3, m_WY2 = -3;
-	// calculate deltas for interpolation
-	m_DX = (m_WX2 - m_WX1) / m_Width;
-	m_DY = (m_WY2 - m_WY1) / m_Height;
+	m_DX = (m_WX2 - m_WX1) / m_Width;//pas pixel axe OX
+	m_DY = (m_WY2 - m_WY1) / m_Height;//pas pixel axe OY
 	m_SY += m_DY;
 }
 
@@ -363,18 +349,15 @@ void Engine::InitRender()
 // Fires rays in the scene one scanline at a time, from left
 // to right
 // -----------------------------------------------------------
-bool Engine::Render()
-{
-	// render scene
+bool Engine::Render(){
+
 	//ici notre camera
-	//camera.h stoke origine et taille écran normalement
-	vector3 o( 0, 0, -5 );
+	vector3 origineCam( 0, 0, -5 );
 
 	// reset last found primitive pointer
 	int pos = 0;
 	int totalPixels = m_Height*m_Width;
-	int avancement,pourcentage =0;
-	float dist;
+	int avancement=0,pourcentage =0;
 	Couleur acc;
 	float pasPixel=1.0f/(float)config.nbLancerParPixel;
 
@@ -391,14 +374,14 @@ bool Engine::Render()
 			  for (float l=0; l<1; l+=pasPixel){
 
 			//Initialisation rayon
-			vector3 dir = vector3( m_SX+k*pasPixel, m_SY+l*pasPixel,0) - o;
+			vector3 dir = vector3( m_SX+k*pasPixel, m_SY+l*pasPixel,0) - origineCam;
 			dir.Normalize();
-			Rayon r(o, dir);
-			  
+			Rayon r(origineCam, dir);
+			 //on procède au calcul 
 			acc+=Raytracer( r, 1);
 			}
 			//moyenne sur tous les rayons
-			acc = acc / (float)(config.nbLancerParPixel*config.nbLancerParPixel);
+			acc = acc /(pow((float)config.nbLancerParPixel,2));
 			//clamper la couleur
 			acc.clamp();
 			//transformation en RGB standard
@@ -406,12 +389,13 @@ bool Engine::Render()
 
 			m_Dest[pos++] = (int(acc.r) << 16) + (int(acc.g) << 8) + int(acc.b);
 			
-
+			//pixel suivant axe 0X
 			m_SX += m_DX;
+			avancement++;
+			PourcentageAvancement(avancement,totalPixels,pourcentage);
 		}
+		//Pixel suivant axe 0Y
 		m_SY += m_DY;
-		avancement++;
-		PourcentageAvancement(avancement,totalPixels,pourcentage);
 	}
 	// all done
 	return true;
@@ -420,10 +404,9 @@ bool Engine::Render()
 
 void Engine::PourcentageAvancement(int avancement,int totalPixels,int& pourcentage){
 		int newPourcentage = (int)((float)avancement/totalPixels*100);
-		if (newPourcentage > pourcentage)
-		{
+		if (newPourcentage > pourcentage){
 			pourcentage = newPourcentage;
-			cout << "Percent Complete: " << pourcentage << endl;
+			cout << "Effectué : " << pourcentage << "%"<<endl;
 		}
 }
 

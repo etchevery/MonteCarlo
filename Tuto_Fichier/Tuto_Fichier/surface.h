@@ -2,12 +2,9 @@
 // surface.h
 // 2004 - Jacco Bikker - jacco@bik5.com - www.bik5.com -   <><
 // -----------------------------------------------------------
+#pragma once
 
-#ifndef SURFACE_H
-#define SURFACE_H
-
-#include "string.h"
-#include "common.h"
+#include "Stdafx.h"
 
 
 class Surface
@@ -36,6 +33,3 @@ private:
 	Pixel* m_Buffer;	
 	int m_Width, m_Height;		
 };
-
-
-#endif

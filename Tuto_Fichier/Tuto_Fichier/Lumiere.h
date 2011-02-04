@@ -1,14 +1,7 @@
-#ifndef LUMIERE_H
-#define LUMIERE_H
+#pragma once
 
-#include "stdafx.h"
-#include <vector>
-#include "common.h"
-#include "raytracer.h"
-#include "Couleur.h"
-#include <tinyxml.h>
+#include "Stdafx.h"
 
-using namespace std;
 /*****************************************************************************/
 /*                      Abstract Lumiere Class								 */
 /******************* **********************************************************/
@@ -29,16 +22,11 @@ class Lumiere {
 		//		*fall - const, linear, quadratic falloff terms
         Lumiere(const Couleur color, double cfall=1.0, double lfall=0.0, double qfall=0.0);
         
-        // Returns the color of the Lumiere.
-        //virtual Couleur getIntensity(const vector3& refPoint);
+        //retourne l'apport de lumière sur le point
+        virtual Couleur getIntensity(const vector3& refPoint)=0;
+		//rayon entre la lumiere et l'intersection
+		virtual Rayon getShadowRay(const vector3& startPoint)=0;
 
-		// Gets the shadow ray from STARTPOINT to this Lumiere object given a
-		// certain shadow BIAS.
-		//virtual Rayon getShadowRay(const vector3& startPoint, Rayon& viewRay);
-
-		// For pathtracing. Implemented only for area Lumieres.
-		//virtual void sample(const vector3& fromPoint, const vector3& fromNormal, Couleur& intensity, vector3& incidence);
-		
 		virtual void initFromXML(TiXmlHandle hObj);
 		virtual void afficher();
     protected:
@@ -50,15 +38,11 @@ class Lumiere {
 /*                          Point Lumiere Class                                */
 /*****************************************************************************/
 class PointLumiere: public Lumiere {
-    // Constructs a point Lumiere given the position and the color.
-    // Parameters: 
-    //      x, y, z - Position of the Lumiere.
-    //      color - The Couleur values regarding the color of the Lumiere
     public:
 		PointLumiere(){position=vector3(0,0,0);};
 		PointLumiere(double x, double y, double z, const Couleur color, double cfall=1.0, double lfall=0.0, double qfall=0.0);
-		//Rayon getShadowRay(const vector3& startPoint, double bias, Rayon& viewRay);
-		//Couleur getIntensity(const vector3& refPoint);
+		Rayon getShadowRay(const vector3& startPoint);
+		Couleur getIntensity(const vector3& refPoint);
 		void initFromXML(TiXmlHandle hObj);
 		void afficher();
 	private:
@@ -69,16 +53,17 @@ class PointLumiere: public Lumiere {
 /*****************************************************************************/
 /*                     Directional Lumiere Class                               */
 /*****************************************************************************/
-class DirectionelleLumiere: public Lumiere {
+/*class DirectionelleLumiere: public Lumiere {
     public:
 		DirectionelleLumiere(){direction=vector3(0,0,0);};
 		DirectionelleLumiere(double x, double y, double z, const Couleur color);
 		//Rayon getShadowRay(const vector3& startPoint, double bias, Rayon& viewRay);
+			Rayon getShadowRay(const vector3& startPoint);
+		Couleur getIntensity(const vector3& refPoint);
 		void initFromXML(TiXmlHandle hObj);
 		void afficher();
 	private:
 		vector3 direction;
 		vector3 getIncidence(const vector3 &point);
 };
-
-#endif
+*/

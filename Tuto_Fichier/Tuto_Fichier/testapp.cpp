@@ -1,14 +1,4 @@
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-#include <stdlib.h>
-#include "common.h"
-#include "raytracer.h"
-#include "scene.h"
-#include "config.h"
 #include "stdafx.h"
-#include "Scene.h"
-#include "Surface.h"
 
 #define SCRWIDTH	800
 #define SCRHEIGHT	600
@@ -24,8 +14,14 @@ Engine* tracer = 0;
 Configuration config;
 Surface* surface=0;
 
-void initConf(Configuration& config){
 //mettre tous les paramèters
+void initConf(Configuration& config){
+	config.directLighting=true;
+	config.echantillonType=IMPORTANCE;
+	config.indirectLighting=true;
+	config.russianRoulette=true;
+	config.profondeur=4;
+	config.filename="SpherePlan.xml";
 }
 
 void DrawWindow();
@@ -89,18 +85,16 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, 0, 0, 0);
 
 	// prepare output canvas
-	surface = new Surface( SCRWIDTH, SCRHEIGHT );
+	surface = new Surface(SCRWIDTH,SCRHEIGHT);
 	buffer = surface->GetBuffer();
-	surface->Clear( 0 );
+	surface->Clear(0);
 
 	// prepare renderer
-	tracer = new Engine(config);
-
 	Scene* maScene = new Scene();
-	maScene->chargerScene("SpherePlan.xml");
-
+	maScene->chargerScene(config.filename);
+	tracer = new Engine(config);
 	tracer->SetScene(maScene);
-	tracer->SetTarget( surface->GetBuffer(), SCRWIDTH, SCRHEIGHT );
+	tracer->SetTarget(surface->GetBuffer(),SCRWIDTH, SCRHEIGHT );
 	int tpos = 60;
 
 	// go

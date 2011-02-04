@@ -1,13 +1,16 @@
+#pragma once
 
-#ifndef RAYTRACER_H
-#define RAYTRACER_H
-
+#include "stdafx.h"
 #include "common.h"
 #include "Config.h"
 #include "Intersection.h"
 #include "Materiau.h"
 #include "Rayon.h"
+#include "Scene.h"
+#include "Couleur.h"
 
+
+using namespace std;
 // -----------------------------------------------------------
 // Engine class definition
 // Raytracer core
@@ -66,5 +69,3 @@ protected:
 	//Stokage résultat
 	Pixel* m_Dest;
 };
-
-#endif

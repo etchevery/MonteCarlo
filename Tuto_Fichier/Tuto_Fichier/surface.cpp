@@ -1,12 +1,5 @@
-// -----------------------------------------------------------
-// surface.cpp
-// 2004 - Jacco Bikker - jacco@bik5.com - www.bik5.com -   <><
-// -----------------------------------------------------------
-
-#include "common.h"
 #include "surface.h"
-#include "stdio.h"
-#include "string.h"
+#include "stdafx.h"
 
 
 // -----------------------------------------------------------

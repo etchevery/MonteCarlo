@@ -13,7 +13,7 @@ typedef struct config_render_struct {
 	bool directLighting;
 	bool indirectLighting;
 	bool russianRoulette;
-	string filename;
+	char* filename;
 	 int nbLancerParPixel;
 	 int profondeur;
 } Configuration;

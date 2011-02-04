@@ -1,7 +1,6 @@
 #include "StdAfx.h"
-#include "Scene.h"
 
-using namespace std;
+
 
 Scene::Scene(void)
 {
@@ -96,7 +95,7 @@ void Scene::chargerScene(const char* pFilename)
 			if (strcmp(pElem->Attribute("type"),"point")==0){
 				lum_tmp= new PointLumiere();
 			}else{
-				lum_tmp= new DirectionelleLumiere();
+				//lum_tmp= new DirectionelleLumiere();
 			}
 			hObj=TiXmlHandle(pElem);
 			lum_tmp->initFromXML(hObj);
