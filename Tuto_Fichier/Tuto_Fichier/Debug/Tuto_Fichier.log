@@ -1,4 +1,4 @@
-﻿Build started 03/02/2011 18:49:48.
+﻿Build started 04/02/2011 19:34:54.
      1>Project "C:\Users\CheikAhamed\Documents\Developper\EISTI\OpenGL\MonteCarlo\Tuto_Fichier\Tuto_Fichier\Tuto_Fichier.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Tuto_Fichier.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -36,4 +36,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.96
+Time Elapsed 00:00:01.95
