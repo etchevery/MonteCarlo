@@ -30,8 +30,7 @@ inline double Rand( double a_Range ) { return ((double)rand() / RAND_MAX) * a_Ra
 #define TRACEDEPTH		6
 
 #define PI				3.141592653589793238462f
-#define UNIFORM			1
-#define IMPORTANCE		2
+
 class vector3
 {
 public:
@@ -68,21 +67,37 @@ public:
 	void afficher(){cout << "Point: " << "(" << x << "," << y << "," << z << ")" << endl;}
 };
 
-class plane
-{
+class mat3{
+protected:
+ vector3 v[3];
+
 public:
-	plane() : N( 0, 0, 0 ), D( 0 ) {};
-	plane( vector3 a_Normal, double a_D ) : N( a_Normal ), D( a_D ) {};
-	union
-	{
-		struct
-		{
-			vector3 N;
-			double D;
-		};
-		double cell[4];
-	};
+// Constructors
+
+mat3();
+mat3( vector3& v0,  vector3& v1, vector3& v2);
+
+
+mat3 transpose() const;
+
+friend vector3 operator * (const mat3& a, const vector3& v); 
+
 };
+
+inline mat3::mat3( vector3& v0,  vector3& v1,  vector3& v2)
+{ v[0] = v0; v[1] = v1; v[2] = v2; }
+
+inline vector3 operator * (const mat3& a, const vector3& v) {
+#define ROWCOL(i) a.v[i].x*v.x + a.v[i].y*v.y+ a.v[i].z*v.z
+    return vector3(ROWCOL(0), ROWCOL(1), ROWCOL(2));
+#undef ROWCOL // (i)
+}
+
+inline mat3 mat3::transpose() const {
+	return mat3(vector3(v[0].x, v[1].x, v[2].x),
+		vector3(v[0].y, v[1].y, v[2].y),
+		vector3(v[0].z, v[1].z, v[2].z));
+}
 
 typedef vector3 Color;
 

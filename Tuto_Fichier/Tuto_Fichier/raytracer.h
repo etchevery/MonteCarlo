@@ -39,23 +39,23 @@ Couleur Raytracer( Rayon& ,int );
 	bool intersectShadowRay(Rayon& ray);
 
 // Illumination directe
-	Couleur directeIllumination( Rayon& ,const Intersection& ,Reflectance);
+	Couleur directeIllumination( Rayon& ,Intersection& ,Reflectance);
 //selon type de matériaux (diffus ou spéc)calcul couleure directe
-	Couleur diffuse(const Intersection& intersection, const vector3& incidence, const Couleur& color,Reflectance refl);
-	Couleur speculaire(const Intersection& intersection, vector3& incidence, const Couleur& color, Rayon& viewRay,Reflectance refl);
+	Couleur diffuse( Intersection& intersection, const vector3& incidence, const Couleur& color,Reflectance refl);
+	Couleur speculaire( Intersection& intersection, vector3& incidence, const Couleur& color, Rayon& viewRay,Reflectance refl);
 
 	// Illumination Indirecte, propagation du rayon
 	Couleur diffusePropagation(Rayon& ray, Intersection& intersection, int depth);
     Couleur speculairePropagation(Rayon& ray, Intersection& intersection, int depth);
 	Couleur reflexionPropagation(Rayon& ray, Intersection& intersection, int depth);
-	Couleur refractionPropagation(Rayon& ray, const Intersection& intersect, int depth);
+	Couleur refractionPropagation(Rayon& ray, Intersection& intersect, int depth);
 
 	// Geometrie reflexion, refraction
 	vector3 rayonReflexion(vector3& dir, const vector3& normal);//calcul direction rayon réfléchi
 	bool Engine::isOut(vector3& direction,vector3& normal);//test rayon entrant ou sortant objet à refraction
     bool calculRefraction(Rayon& ray, Intersection& intersection, Rayon& refrRay, double& schlick);//calcul rayon refracté
 	double calculSchlick(double n, double nt, vector3& rayDir, vector3& refrDir, vector3& surfNorm);//approximation schilck
-	bool isRefracte(vector3 direction, vector3 normal, const Intersection& intersect, double oldIndex, double newIndex, vector3& refractDirection);//savoir si il y a refraction
+	bool isRefracte(vector3 direction, vector3 normal, Intersection& intersect, double oldIndex, double newIndex, vector3& refractDirection);//savoir si il y a refraction
 
 protected:
 	// renderer data

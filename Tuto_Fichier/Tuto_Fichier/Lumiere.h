@@ -6,6 +6,7 @@
 #include "common.h"
 #include "raytracer.h"
 #include "Couleur.h"
+#include <tinyxml.h>
 
 using namespace std;
 /*****************************************************************************/

@@ -26,10 +26,10 @@ Couleur& Couleur::clamp() {
 Couleur& Couleur::normalize()
 {
 	double maxcomp = MAX(r, MAX(g,b));
-	double n[3];
-	n[0] /= maxcomp;
-	n[1] /= maxcomp;
-	n[2] /= maxcomp;
+
+	r /= maxcomp;
+	g /= maxcomp;
+	b /= maxcomp;
 
 	return *this;
 }
