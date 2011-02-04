@@ -131,14 +131,18 @@ void Scene::afficherScene(){
 		Objet** tab = this->getObjets();
 
 		bool isIntersect = false;  //par défaut pas d'intersection
-		int i; //indice de boucle
+		int i,j_min; //indice de boucle
+		double d_min; 
+
 
 		//objet n°1
-		I=tab[0]->intersect(&r);
-		if(I.getDistance()<DBL_MAX)
+		d_min=tab[0]->intersect(&r).getDistance();
+		j_min=0;
+		if(d_min<DBL_MAX)
 		{
 			isIntersect = true;
 		}
+
 
 		//on parcourt tous les objets
 		for(i=1;i<nbObjet;i++)
@@ -147,12 +151,16 @@ void Scene::afficherScene(){
 			//si le rayon intersecte l'objet
 			//et si la distance de l'objet en cours est inférieure à celle de l'objet le plus proche
 			if(tab[i]->intersect(&r).getDistance()<DBL_MAX 
-				&& tab[i]->intersect(&r).getDistance()<I.getDistance())
+				&& tab[i]->intersect(&r).getDistance()<d_min)
 			{
 				isIntersect = true;
-				I=tab[i]->intersect(&r);
+				d_min=tab[i]->intersect(&r).getDistance();
+				j_min = i;
 			}
+
 		}
+
+		if(isIntersect) I=tab[j_min]->intersect(&r);
 
 		return isIntersect;
 	}

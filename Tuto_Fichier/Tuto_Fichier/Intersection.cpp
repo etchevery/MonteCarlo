@@ -81,12 +81,14 @@
 		if(this->distance>=DBL_MAX){
 			cout << "pas d'intersection" <<endl;
 		}else{
-			cout<<"Intersection ---> ";
-			this->objet->afficher();
-			cout<<"Point d'intersection ---> ";
-			this->point.afficher();
-			cout<<"Distance: " << this->distance << endl; 
-			cout<<"Normal ---> " ;
-			this->normal.afficher();
+			cout << endl << "********************************************" << endl << endl;
+				cout<<"Intersection ---> ";
+				this->objet->afficher();
+				cout<<"Point d'intersection ---> ";
+				this->point.afficher();
+				cout<<"Distance: " << this->distance << endl; 
+				cout<<"Normal ---> " ;
+				this->normal.afficher();
+		    cout << endl << "********************************************" << endl << endl;
 		}
 	}

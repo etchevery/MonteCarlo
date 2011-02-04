@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ﻿Build started 04/02/2011 19:55:35.
      1>Project "D:\My Documents\Ing2\lancer_de_rayon\ProjetFinal\Tuto_Fichier\Tuto_Fichier\Tuto_Fichier.vcxproj" on node 2 (build target(s)).
+=======
+﻿Build started 04/02/2011 19:34:54.
+     1>Project "C:\Users\CheikAhamed\Documents\Developper\EISTI\OpenGL\MonteCarlo\Tuto_Fichier\Tuto_Fichier\Tuto_Fichier.vcxproj" on node 2 (build target(s)).
+>>>>>>> e391fb77c0d7bc3280a858ce634fe7fda4e6d16d
      1>InitializeBuildStatus:
          Creating "Debug\Tuto_Fichier.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
@@ -63,4 +68,8 @@
 
 Build succeeded.
 
+<<<<<<< HEAD
 Time Elapsed 00:00:05.69
+=======
+Time Elapsed 00:00:01.95
+>>>>>>> e391fb77c0d7bc3280a858ce634fe7fda4e6d16d

@@ -10,25 +10,21 @@
 using namespace std;
 class Plan : public Objet{
 private:
-			double x;
-			double y;
-			double z;
-
-			double norm;
+			vector3 u;
+			vector3 v;
+			vector3 w;
 public :
 	Plan();
-    Plan(double param_x,double param_y,double param_z,double param_norm);
+    Plan(vector3 a,vector3 b,vector3 c);
 	~Plan();
 	
-	double getX(){return x;};
-	double getY(){return y;};
-	double getZ(){return z;};
-	double getNorm(){return norm;};
+	vector3 getU(){return u;};
+	vector3 getV(){return v;};
+	vector3 getW(){return w;};
 
-	void setX(double param_x){this->x=param_x;};
-	void setY(double param_y){this->y=param_y;};
-	void setZ(double param_z){this->z=param_z;};
-	void setNorm(double param_norm){this->norm=param_norm;};
+	void setU(vector3 u){this->u=u;};
+	void setV(vector3 v){this->v=v;};
+	void setW(vector3 w){this->w=w;};
 
 	void initFromXML(TiXmlHandle hObj);
 	void afficher();
