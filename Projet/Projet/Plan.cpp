@@ -18,6 +18,14 @@ Plan::Plan(vector3 a,vector3 b,vector3 c){
 Plan::~Plan(){
 }
 
+bool Plan::operator ==( Plan& P){
+ bool test=false;
+ if(this->u==P.u && this->v==P.v && this->w==P.w)
+	test=true;
+
+ return test;
+}
+
 void Plan::initFromXML(TiXmlHandle hObj){
 	double x1, y1, z1;
 	double x2, y2, z2;
@@ -68,9 +76,7 @@ Intersection Plan::intersect (Rayon* r)
 
 	vector3 D(dx,dy,dz); //vecteur directionnel du rayon (normalisé)
 	vector3 N=this->normale(); //vecteur normal au plan  
-	N.afficher();
 	N.Normalize(); //normalisation du vecteur
-	N.afficher();
 	/*(P): ax+by+cz+d=0 :  vecteur u appartient à (P) 
 	 * d=-(a*u.x+b*u.y+c*u.z) (par exemple)
 	 */ 
@@ -110,6 +116,11 @@ Intersection Plan::intersect (Rayon* r)
 			inter.setDistance(DBL_MAX);
 			}
 	}
+	cout<< endl << "plan::debut verification : **************************************************" << endl;
+	cout << endl << "remplace eq: : " << " = " 
+		<< N.x*inter.getPoint().x+N.y*inter.getPoint().y+N.z*inter.getPoint().z+d << endl;
+	cout<< endl << "plan:: fin verification : **************************************************" << endl;
+
 	return(inter);
 }
 		

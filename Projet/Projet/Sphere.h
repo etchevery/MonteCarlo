@@ -1,9 +1,13 @@
-#pragma once
+#ifndef SPHERE_H
+#define SPHERE_H
 
-#include "StdAfx.h"
 #include "Objet.h"
-#include "tinyxml.h"
 #include <tinyxml.h>
+#include <iostream>
+#include "Intersection.h"
+#include "Rayon.h"
+
+using namespace std;
 
 class Sphere : public Objet{
 private:
@@ -26,8 +30,14 @@ public :
 	void setZ(double z){centre_z=z;};
 
 	void initFromXML(TiXmlHandle hObj);
+	
+    bool operator ==( Sphere& S);
+	
 	void afficher();
 
 	Intersection intersect(Rayon* r);
+	Intersection intersect2(Rayon* r);
 	vector3 normale(vector3 p);
 };
+
+#endif // SPHERE_H
