@@ -66,6 +66,9 @@
     <ClInclude Include="PointLumiere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tetraedre.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Couleur.cpp">
@@ -111,6 +114,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PointLumiere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tetraedre.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

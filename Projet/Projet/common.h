@@ -1,9 +1,18 @@
 // -----------------------------------------------------------
 // common.h
 // 2004 - Jacco Bikker - jacco@bik5.com - www.bik5.com -   <><
-#pragma once
+// -----------------------------------------------------------
+
+#ifndef I_COMMON_H
+#define I_COMMON_H
 
 #include "stdafx.h"
+#include "math.h"
+#include "stdlib.h"
+#include <tinyxml.h>
+#include <iostream>
+
+using namespace std;
 
 typedef unsigned int Pixel;
 
@@ -42,6 +51,7 @@ public:
 	void operator *= ( vector3& a_V ) { x *= a_V.x; y *= a_V.y; z *= a_V.z; }
 	void operator *= ( vector3* a_V ) { x *= a_V->x; y *= a_V->y; z *= a_V->z; }
 	vector3 operator- () const { return vector3( -x, -y, -z ); }
+	bool operator ==( vector3& v){bool test=false; if(x==v.x && y==v.y && z==v.z) test=true; return test;}
 	friend vector3 operator + ( const vector3& v1, const vector3& v2 ) { return vector3( v1.x + v2.x, v1.y + v2.y, v1.z + v2.z ); }
 	friend vector3 operator - ( const vector3& v1, const vector3& v2 ) { return vector3( v1.x - v2.x, v1.y - v2.y, v1.z - v2.z ); }
 	friend vector3 operator + ( const vector3& v1, vector3* v2 ) { return vector3( v1.x + v2->x, v1.y + v2->y, v1.z + v2->z ); }
@@ -56,6 +66,12 @@ public:
 		struct { double cell[3]; };
 	};
 	void afficher(){cout << "Point: " << "(" << x << "," << y << "," << z << ")" << endl;}
+
+	//M est le mileur de [A,B]
+	vector3 symetrieCentrale(vector3 M){
+		return vector3(2*M.x-this->x, 2*M.y-this->y, 2*M.z-this->z);
+	}
+
 };
 
 class mat3{
@@ -91,3 +107,6 @@ inline mat3 mat3::transpose() const {
 }
 
 typedef vector3 Color;
+
+
+#endif

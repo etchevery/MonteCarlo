@@ -142,7 +142,7 @@ Intersection Sphere::intersect2(Rayon* r)
 	Intersection inter;
 	double ah,bh;
 	double d;
-	double t,t1,t2,t3;
+	double t,t1,t2;
 
 	//paramètre du rayon lancé
     double dx=r->getDirection().x; double px=r->getPosition().x;

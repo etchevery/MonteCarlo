@@ -97,6 +97,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Tetraedre.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Couleur.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="testapp.cpp" />
+    <ClCompile Include="Tetraedre.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

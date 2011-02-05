@@ -14,6 +14,7 @@ public:
 	Intersection();
 	~Intersection();
 	Intersection(Objet* obj);
+	Intersection(Objet* obj, Rayon* r, vector3 A,vector3 B,vector3 C);
 	vector3 getPoint();
 	vector3 getNormal();
 	double getDistance();

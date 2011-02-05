@@ -26,7 +26,7 @@ void initConf(Configuration& config){
 	config.russianRoulette=true;
 	config.profondeur=1;
 	config.nbLancerParPixel=1;
-	config.filename="Sphere.xml";
+	config.filename="Objet.xml";
 }
 
 void DrawWindow();
@@ -99,7 +99,14 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	// prepare renderer
 	Scene* maScene = new Scene();
 	maScene->chargerScene(config.filename);
-	tracer = new Engine(config);
+	maScene->afficherScene();
+    Rayon Rt=Rayon(1.0,1.0,1.0,-1.0,-1.0,-3.0);
+	 Intersection I;
+	 cout << endl << ">>>>>>>>> intersection global: " << maScene->intersect(Rt, I) << endl << endl;
+    I.afficher();
+
+	
+	/*tracer = new Engine(config);
 	tracer->SetScene(maScene);
 	tracer->SetTarget(surface->GetBuffer(),SCRWIDTH, SCRHEIGHT );
 	int tpos = 60;
@@ -107,12 +114,13 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	system("Pause");
 	// go
 	tracer->InitRender();
-	tracer->Render();
+	tracer->Render();*
 
 	while (1)
 	{
 		DrawWindow();
 	}
+	*/
 	system("PAUSE");
 FreeConsole();  // Close the console window
 	return 1;

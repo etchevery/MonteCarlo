@@ -1,4 +1,4 @@
-﻿Build started 05/02/2011 18:27:01.
+﻿Build started 05/02/2011 20:15:24.
      1>Project "C:\Users\CheikAhamed\Documents\Developper\EISTI\OpenGL\MonteCarlo\Projet\Projet\Projet.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Projet.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -17,4 +17,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.21
+Time Elapsed 00:00:00.16
