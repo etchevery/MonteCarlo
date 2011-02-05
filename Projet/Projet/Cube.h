@@ -10,21 +10,24 @@
 using namespace std;
 class Cube : public Objet{
 private:
-			vector3 centre; //centre
-			double longueur; //hauteur 
+	/*   1 ************ 2
+	 *     *          *
+	 *     *          *
+	 *     *          *
+	 *   4 ************ 3
+	 */
+			vector3 Sommets[8]; //sommet du cube
 public :
 	Cube();
-    Cube(vector3 c,double l);
+    Cube(vector3 S[6]);
 	~Cube();
 	
-	vector3 getCentre(){return centre;};
-	double getLongueur(){return longueur;};
+	vector3* getSommets();
 
-	void setCentre(vector3 c){this->centre=c;};
-	void setLongueur(double l){this->longueur=l;};
+	void setSommets(vector3 c[8]);
 	void afficher();
 	Intersection intersect (Rayon* r);
-    vector3 normale(vector3 p);
+
 };
 
 #endif // CUBE_H

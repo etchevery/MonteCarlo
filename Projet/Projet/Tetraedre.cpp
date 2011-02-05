@@ -71,9 +71,8 @@ void Tetraedre::afficher(){
 Intersection Tetraedre::intersect (Rayon* r)
   {
 
-    Intersection inter;
+    Intersection inter, inter_tmp, I[4];
 
-	Intersection I[4]; 
 	I[0]=Intersection(this,r, this->a,this->b,this->c);
 	I[1]=Intersection(this,r, this->c,this->d,this->a);
 	I[2]=Intersection(this,r, this->a,this->b,this->d);
@@ -90,9 +89,8 @@ Intersection Tetraedre::intersect (Rayon* r)
 					d_min=I[i].getDistance();
 				}
 	}
-	
+
 	inter.setObjet(this);
 	return(inter);
+
 }	
-
-

@@ -5,6 +5,7 @@
 #include "Plan.h"
 #include "Sphere.h"
 #include "Tetraedre.h"
+#include "Cube.h"
 #include "tinyxml.h"
 #include <tinyxml.h>
 class Scene

@@ -96,17 +96,39 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	AllocConsole();   //Sortie Console
 	freopen("CONOUT$","wb",stdout);
 
+
 	// prepare renderer
 	Scene* maScene = new Scene();
 	maScene->chargerScene(config.filename);
 	maScene->afficherScene();
-    Rayon Rt=Rayon(1.0,1.0,1.0,-1.0,-1.0,-3.0);
+	vector3 Sommets[8];
+	Rayon RS=Rayon(0.0,3.0,0.0,0.0,-1.0,0.0);
+	Sommets[0]=vector3(-1.0,1.0,1.0);Sommets[1]=vector3(1.0,1.0,1.0);
+	Sommets[2]=vector3(1.0,-1.0,1.0);Sommets[3]=vector3(-1.0,-1.0,1.0);
+	Sommets[4]=vector3(-1.0,1.0,-1.0);Sommets[5]=vector3(1.0,1.0,-1.0);
+	Sommets[6]=vector3(1.0,-1.0,-1.0);Sommets[7]=vector3(-1.0,-1.0,-1.0);
+	Cube C(Sommets);
+	C.afficher();
+	Intersection I=C.intersect(&RS);
+	I.afficher();
+
+	Objet** obj=maScene->getObjets();
+
+	for(int j=0;j<maScene->getNbObjets();j++){
+		cout << endl << endl << "****************************************" << endl << endl;
+		I=obj[0]->intersect(&RS);
+		I.afficher();
+	}
+
+
+	/*
+    Rayon Rt=Rayon(0.0,0.0,4.0,0.0,0.0,-1.0);
+	    Rayon R=Rayon(1.0,0.5,1.0,0.0,0.0,-1.0);
 	 Intersection I;
-	 cout << endl << ">>>>>>>>> intersection global: " << maScene->intersect(Rt, I) << endl << endl;
+	 cout << endl << ">>>>>>>>> intersection global: " << maScene->intersect(R, I) << endl << endl;
     I.afficher();
 
-	
-	/*tracer = new Engine(config);
+	tracer = new Engine(config);
 	tracer->SetScene(maScene);
 	tracer->SetTarget(surface->GetBuffer(),SCRWIDTH, SCRHEIGHT );
 	int tpos = 60;

@@ -30,47 +30,46 @@
 
 	 Intersection::Intersection(Objet* obj, Rayon* r, vector3 A,vector3 B,vector3 C){
 
-	 this->objet=obj;
-
+	this->objet=obj;
+    double t,a,f,u,v;
 	double dx=r->getDirection().x; double px=r->getPosition().x;
 	double dy=r->getDirection().y; double py=r->getPosition().y;
 	double dz=r->getDirection().z; double pz=r->getPosition().z;
 
+	vector3 E;
 	vector3 AB=B-A; //vecteur AB
 	vector3 AC=C-A; //vecteur AC
 	vector3 AP=r->getPosition()-A; //vecteur AP (P:position rayon)
+	vector3 APD=r->getDirection().vector_product(AC);
+	a = AB.Dot(APD);
 
-	cout << endl <<  "AB=";AB.afficher();
-	cout << "AC=";AC.afficher(); cout << endl;
-	cout << "Posi=";r->getPosition().afficher(); 
-    cout << "Diri=";r->getDirection().afficher(); cout << endl;
+	if (a > -EPSILON && a < EPSILON){
+		this->distance=DBL_MAX; //pas d'intersection
+	}else{
+		f=1/a;
+		u=f*(AP.Dot(APD));
+		if(u<0.0 || u>1.0){
+			this->distance=DBL_MAX; //pas d'intersection
+		}else{
+			E=AP.vector_product(AB);
+			v=f*(r->getDirection().Dot(E));
 
-	double D= AB.z * dy * AC.x - AB.y * dz * AC.x 
-		     - dx * AB.x * AC.y - dz * AB.x * AC.z 
-			 + dz * AB.x * AC.y + dx * AB.y * AC.z;
-
-    double u =(-dy * AP.x * AC.z + dy * AC.x * AP.z - AC.x * dz * AP.y + AP.x * dz * AC.y -
-     dx * AC.y * AP.z + dx * AP.y * AC.z) / D;
-	double v =(dx * AB.y * AP.z + dz * AB.x * AP.y - AB.y * dz * AP.x - dx * AB.z * AP.y -
-				dy * AB.x * AP.z + AB.z * dy * AP.x) / D;
-    double t =(AP.x * AB.z * AC.y - AP.x * AB.y * AC.z - AB.x * AC.y * AP.z + AB.x * AP.y * AC.z +
-			 AC.x * AB.y * AP.z - AC.x * AB.z * AP.y) / D;
-
-	  if (fabs (D) > EPSILON && u > EPSILON && v > EPSILON && (u + v) <= 1 + EPSILON)
-    {
-		this->point=vector3(t * r->getDirection().x + r->getPosition().z,
-							   t * r->getDirection().y + r->getPosition().y,
-							   t * r->getDirection().z + r->getPosition().z);
-		this->distance= (this->point-r->getPosition()).Length() ;
-
-			vector3 N=AB.vector_product(AC);
-			N.Normalize();
-			this->normal=N;
-
-    }else{
-		 this->distance=DBL_MAX;
+		 	if (v < 0.0 || u + v > 1.0){
+				this->distance=DBL_MAX; //pas d'intersection
+			}else{
+				t=f*AC.Dot(E);
+				if(t>EPSILON){  //intersection 
+					this->point= vector3(t * dx + pz,t * dy + py,t * dz + pz);
+					this->distance=(this->point-r->getPosition()).Length() ;
+					vector3 N=AB.vector_product(AC);
+					N.Normalize();
+					this->normal=N;
+				}else{ //intersection = segment (rayon dans le triangle)
+					this->distance=DBL_MAX; //pas d'intersection
+				}
+			}
+		}
 	}
-
 }
 
 	Intersection::~Intersection()
