@@ -1,0 +1,57 @@
+﻿Build started 05/02/2011 17:59:49.
+     1>Project "D:\My Documents\Ing2\lancer_de_rayon\ProjetFinal\Projet\Projet\Projet.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\Projet.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\tinyxml /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Couleur.cpp Cylindre.cpp Intersection.cpp Lumiere.cpp Materiau.cpp Objet.cpp Plan.cpp Rayon.cpp raytracer.cpp Scene.cpp PointLumiere.cpp Sphere.cpp stdafx.cpp surface.cpp testapp.cpp
+         testapp.cpp
+     1>d:\my documents\ing2\lancer_de_rayon\projetfinal\projet\projet\testapp.cpp(97): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(249) : see declaration of 'freopen'
+         surface.cpp
+         stdafx.cpp
+         Sphere.cpp
+         PointLumiere.cpp
+         Scene.cpp
+         raytracer.cpp
+         Rayon.cpp
+         Plan.cpp
+         Objet.cpp
+         Materiau.cpp
+         Lumiere.cpp
+         Intersection.cpp
+         Cylindre.cpp
+         Couleur.cpp
+         Generating Code...
+       ManifestResourceCompile:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\Projet.exe.embed.manifest.res" Debug\Projet_manifest.rc 
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\My Documents\Ing2\lancer_de_rayon\ProjetFinal\Projet\Debug\Projet.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\tinyxml\Debug kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib tinyxmld.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Projet.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\My Documents\Ing2\lancer_de_rayon\ProjetFinal\Projet\Debug\Projet.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\My Documents\Ing2\lancer_de_rayon\ProjetFinal\Projet\Debug\Projet.lib" /MACHINE:X86 Debug\Projet.exe.embed.manifest.res
+         Debug\Couleur.obj
+         Debug\Cylindre.obj
+         Debug\Intersection.obj
+         Debug\Lumiere.obj
+         Debug\Materiau.obj
+         Debug\Objet.obj
+         Debug\Plan.obj
+         Debug\Rayon.obj
+         Debug\raytracer.obj
+         Debug\Scene.obj
+         Debug\PointLumiere.obj
+         Debug\Sphere.obj
+         Debug\stdafx.obj
+         Debug\surface.obj
+         Debug\testapp.obj
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Projet.exe.embed.manifest" /manifest Debug\Projet.exe.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         Projet.vcxproj -> D:\My Documents\Ing2\lancer_de_rayon\ProjetFinal\Projet\Debug\Projet.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\Projet.unsuccessfulbuild".
+         Touching "Debug\Projet.lastbuildstate".
+     1>Done Building Project "D:\My Documents\Ing2\lancer_de_rayon\ProjetFinal\Projet\Projet\Projet.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:23.09
