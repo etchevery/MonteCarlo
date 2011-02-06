@@ -54,7 +54,7 @@ void Sphere::afficher(){
 	 * (dx²+dy²+dz²)t²+2*(dx.px+dy.py+dz.pz)t+((px-c_x)²+(py-c_y)²+(pz-c_z)²-rayon²)=0
 	 * at²+bt+c=0
 	 */
-Intersection Sphere::intersect2(Rayon* r)
+Intersection Sphere::intersect(Rayon* r)
 {
 	Intersection inter;
 	double a;
@@ -129,7 +129,7 @@ Intersection Sphere::intersect2(Rayon* r)
 //il n'existe qu'un seul grand cercle passant par A et B (représenté en bleu sur la figure). 
 //Comme (OH) est un diamètre perpendiculaire à la corde [AB] alors (OH) est médiatrice de [AB].
 
- Intersection Sphere::intersect(Rayon* r)
+ Intersection Sphere::intersect2(Rayon* r)
 {
 	Intersection inter;
 	double ah,bh;
