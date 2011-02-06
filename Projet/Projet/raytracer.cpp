@@ -93,7 +93,6 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 	if (!maScene->intersect(a_Ray,intersection))
 	 return Couleur::black;
 
-
 	//on récupère les informations de matériaux (couleurs)
 	Reflectance refl = intersection.getObjet()->GetReflectance();
 

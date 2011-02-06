@@ -24,9 +24,9 @@ void initConf(Configuration& config){
 	config.echantillonType=IMPORTANCE;
 	config.indirectLighting=true;
 	config.russianRoulette=true;
-	config.profondeur=4;
-	config.nbLancerParPixel=10;
-	config.filename="Sphere.xml";
+	config.profondeur=1;
+	config.nbLancerParPixel=4;
+	config.filename="Objet.xml";
 }
 
 void DrawWindow();
@@ -101,32 +101,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	Scene* maScene = new Scene();
 	maScene->chargerScene(config.filename);
 	maScene->afficherScene();
-	vector3 Sommets[8];
-	Rayon RS=Rayon(0.0,3.0,0.0,0.0,-1.0,0.0);
-	Sommets[0]=vector3(-1.0,1.0,1.0);Sommets[1]=vector3(1.0,1.0,1.0);
-	Sommets[2]=vector3(1.0,-1.0,1.0);Sommets[3]=vector3(-1.0,-1.0,1.0);
-	Sommets[4]=vector3(-1.0,1.0,-1.0);Sommets[5]=vector3(1.0,1.0,-1.0);
-	Sommets[6]=vector3(1.0,-1.0,-1.0);Sommets[7]=vector3(-1.0,-1.0,-1.0);
-	Cube C(Sommets);
-	C.afficher();
-	Intersection I=C.intersect(&RS);
-	I.afficher();
-
-	Objet** obj=maScene->getObjets();
-
-	for(int j=0;j<maScene->getNbObjets();j++){
-		cout << endl << endl << "****************************************" << endl << endl;
-		I=obj[0]->intersect(&RS);
-		I.afficher();
-	}
-
-
-	/*
-    Rayon Rt=Rayon(0.0,0.0,4.0,0.0,0.0,-1.0);
-	    Rayon R=Rayon(1.0,0.5,1.0,0.0,0.0,-1.0);
-	 Intersection I;
-	 cout << endl << ">>>>>>>>> intersection global: " << maScene->intersect(R, I) << endl << endl;
-    I.afficher();
 
 	tracer = new Engine(config);
 	tracer->SetScene(maScene);
@@ -136,13 +110,13 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	system("Pause");
 	// go
 	tracer->InitRender();
-	tracer->Render();*
+	tracer->Render();
 
 	while (1)
 	{
 		DrawWindow();
 	}
-	*/
+	
 	system("PAUSE");
 FreeConsole();  // Close the console window
 	return 1;

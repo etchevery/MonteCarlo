@@ -147,7 +147,6 @@ void Scene::afficherScene(){
 		Objet** tab = this->getObjets();
 		Intersection tmp;
 		bool isIntersect = false;  //par défaut pas d'intersection
-
 		double d_min=DBL_MAX; 
 
 		//on parcourt tous les objets
@@ -155,8 +154,7 @@ void Scene::afficherScene(){
 			//si le rayon intersecte l'objet
 			//et si la distance de l'objet en cours est inférieure à celle de l'objet le plus proche
 			tmp=tab[i]->intersect(&r);
-			if(tmp.getDistance()<d_min)
-			{
+			if(tmp.getDistance()<d_min){
 				isIntersect = true;
 				I=tmp;
 				d_min=I.getDistance();
