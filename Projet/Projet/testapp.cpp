@@ -25,7 +25,7 @@ void initConf(Configuration& config){
 	config.indirectLighting=true;
 	config.russianRoulette=true;
 	config.profondeur=1;
-	config.nbLancerParPixel=4;
+	config.nbLancerParPixel=10;
 	config.filename="Objet.xml";
 }
 
