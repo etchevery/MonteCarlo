@@ -102,13 +102,14 @@ Intersection Sphere::intersect2(Rayon* r)
 			  //on normalise la normale
 			  normal.Normalize();
 			  inter.setNormal(normal);
-			}
-	  }
-	  	cout << "rayon=" << rayon << " , size=" << (this->getCentre()-inter.getPoint()).Length() << endl;
-	cout << endl << "vérification: " << "eq " 
+		cout << "rayon=" << rayon << " , size=" << (this->getCentre()-inter.getPoint()).Length() << endl;
+		cout << endl << "vérification: " << "eq " 
 		<< pow(inter.getPoint().x-this->centre_x,2)
 		+pow(inter.getPoint().y-this->centre_y,2)
 		+pow(inter.getPoint().z-this->centre_z,2)-pow((this->getCentre()-inter.getPoint()).Length(),2) << endl;
+			}
+	  }
+
 	  return (inter);
     }
 

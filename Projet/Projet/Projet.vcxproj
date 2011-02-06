@@ -83,6 +83,7 @@
     <ClInclude Include="common.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Couleur.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="Cylindre.h" />
     <ClInclude Include="Intersection.h" />
     <ClInclude Include="Lumiere.h" />
@@ -97,9 +98,11 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Tetraedre.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Couleur.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Cylindre.cpp" />
     <ClCompile Include="Intersection.cpp" />
     <ClCompile Include="Lumiere.cpp" />
@@ -114,6 +117,7 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="testapp.cpp" />
+    <ClCompile Include="Tetraedre.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ﻿Build started 06/02/2011 13:08:05.
      1>Project "D:\My Documents\Ing2\lancer_de_rayon\ProjetFinal\Projet\Projet\Projet.vcxproj" on node 2 (build target(s)).
+=======
+﻿Build started 05/02/2011 23:20:23.
+     1>Project "C:\Users\CheikAhamed\Documents\Developper\EISTI\OpenGL\MonteCarlo\Projet\Projet\Projet.vcxproj" on node 2 (build target(s)).
+>>>>>>> 4e755c446454da32d3ad6cc4fd23e970051aa123
      1>InitializeBuildStatus:
          Creating "Debug\Projet.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
@@ -39,4 +44,8 @@
 
 Build succeeded.
 
+<<<<<<< HEAD
 Time Elapsed 00:00:02.35
+=======
+Time Elapsed 00:00:00.19
+>>>>>>> 4e755c446454da32d3ad6cc4fd23e970051aa123

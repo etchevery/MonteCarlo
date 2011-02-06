@@ -1,9 +1,18 @@
 // -----------------------------------------------------------
 // common.h
 // 2004 - Jacco Bikker - jacco@bik5.com - www.bik5.com -   <><
-#pragma once
+// -----------------------------------------------------------
+
+#ifndef I_COMMON_H
+#define I_COMMON_H
 
 #include "stdafx.h"
+#include "math.h"
+#include "stdlib.h"
+#include <tinyxml.h>
+#include <iostream>
+
+using namespace std;
 
 typedef unsigned int Pixel;
 
@@ -57,6 +66,12 @@ public:
 		struct { double cell[3]; };
 	};
 	void afficher(){cout << "Point: " << "(" << x << "," << y << "," << z << ")" << endl;}
+
+	//M est le mileur de [A,B]
+	vector3 symetrieCentrale(vector3 M){
+		return vector3(2*M.x-this->x, 2*M.y-this->y, 2*M.z-this->z);
+	}
+
 };
 
 class mat3{
@@ -90,3 +105,6 @@ inline mat3 mat3::transpose() const {
 }
 
 typedef vector3 Color;
+
+
+#endif

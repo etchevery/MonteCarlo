@@ -112,14 +112,15 @@ Intersection Plan::intersect (Rayon* r)
 								t * r->getDirection().z + r->getPosition().z));
 			inter.setDistance( (inter.getPoint()-r->getPosition()).Length() );
 			inter.setNormal(N);
+	cout<< endl << "plan::debut verification : **************************************************" << endl;
+	cout << endl << "remplace eq: : " << " = " 
+	<< N.x*inter.getPoint().x+N.y*inter.getPoint().y+N.z*inter.getPoint().z+d << endl;
+	cout<< endl << "plan:: fin verification : **************************************************" << endl;
 			}else{
 			inter.setDistance(DBL_MAX);
 			}
 	}
-	cout<< endl << "plan::debut verification : **************************************************" << endl;
-	cout << endl << "remplace eq: : " << " = " 
-		<< N.x*inter.getPoint().x+N.y*inter.getPoint().y+N.z*inter.getPoint().z+d << endl;
-	cout<< endl << "plan:: fin verification : **************************************************" << endl;
+
 
 	return(inter);
 }

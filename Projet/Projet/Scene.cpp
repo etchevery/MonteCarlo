@@ -14,7 +14,6 @@ Scene::~Scene(void)
 // load the named file and dump its structure to STDOUT
 void Scene::chargerScene(const char* pFilename)
 {
-
 	TiXmlDocument doc(pFilename);
 	bool loadOkay = doc.LoadFile();
 	Objet* obj_tmp;
@@ -39,6 +38,11 @@ void Scene::chargerScene(const char* pFilename)
 		while (pElem){
 			cpt_obj++;
 			pElem=pElem->NextSiblingElement("Plan");
+		}
+		pElem=hDoc.FirstChildElement("Tetraedre").Element();
+		while (pElem){
+			cpt_obj++;
+			pElem=pElem->NextSiblingElement("Tetraedre");
 		}
 		cout << "Nombre d'objets dans le fichier : "<<cpt_obj<<endl;
 		tab_obj = new Objet*[cpt_obj];
@@ -78,6 +82,17 @@ void Scene::chargerScene(const char* pFilename)
 			cpt_obj++;
 			
 		}
+		//Tetraedre
+		pElem=hDoc.FirstChildElement("Tetraedre").Element();
+		while (pElem){
+			obj_tmp= new Tetraedre();
+			hObj=TiXmlHandle(pElem);
+			obj_tmp->initFromXML(hObj);
+			tab_obj[cpt_obj]=obj_tmp;
+			pElem=pElem->NextSiblingElement("Tetraedre");
+			cpt_obj++;
+		}
+
 		if(nb_obj=cpt_obj){
 			cout<<"Tous les objets ont été chargés"<<endl;
 		}
