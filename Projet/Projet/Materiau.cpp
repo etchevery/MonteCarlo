@@ -47,7 +47,7 @@ void Materiau::initFromXML(TiXmlHandle hObj){
 	}
 	pElem = hCouleur.FirstChildElement("kS").Element();
 	if(pElem){
-		this->myReflectance.kR.initFromXML(TiXmlHandle(pElem));
+		this->myReflectance.kS.initFromXML(TiXmlHandle(pElem));
 	}
 	pElem = hCouleur.FirstChildElement("kR").Element();
 	if(pElem){

@@ -27,7 +27,7 @@ bool Engine::rouletteRusse(const Couleur& couleur, double& puissanceRestant)
 {
 	double p = MAX(couleur.r, MAX(couleur.g, couleur.b));
 	puissanceRestant = 1.0/p;
-	return (rand() > p);
+	return (Rand(1.0) > p);
 }
 
 bool Engine::glossyRoulette(const Couleur& kS, const Couleur& kD, double& puissanceRestant){
@@ -35,8 +35,7 @@ bool Engine::glossyRoulette(const Couleur& kS, const Couleur& kD, double& puissa
 	double diffuse = MAX(kD.r, MAX(kD.g, kD.b));//composante max diffus
     double p = spec/(spec + diffuse);//calcul proba
 	puissanceRestant = 1.0/p;
-    
-    return (rand() > p);
+    return (Rand(1.0) > p);
 }
 
 vector3 Engine::MonteCarlo(vector3& normale, double nPhong){
@@ -48,18 +47,17 @@ vector3 Engine::MonteCarlo(vector3& normale, double nPhong){
 }
 
 vector3 Engine::MonteCarloUniforme(vector3& normale){
-	double r1, r2, r3;
-	double x, y, z;
-	r1 = rand();
-	r2 = rand();
-	r3 = rand();
+	double r1, r2, r3, x, y, z;
+	r1 = Rand(1.0);
+	r2 = Rand(1.0);
+	r3 = Rand(1.0);
 
 	x = 1 - 2*r1;
 	y = 1 - 2*r2;
 	z = 1 - 2*r3;
 	vector3 rayon(x, y, z);
 
-	if (rayon.Dot(normale) < 0)
+	if (rayon.Dot(normale) < 0.0)
 		rayon = -rayon;
 
 	rayon.Normalize();
@@ -68,16 +66,16 @@ vector3 Engine::MonteCarloUniforme(vector3& normale){
 
 
 vector3 Engine::MonteCarloImportanceSampling(vector3& normale, double nPhong){
-
-	double phi = rand() * 2 * PI;//composante phi aléatoire
-	double theta = acos(pow(rand(), 1/(nPhong+1)));//composante theta aléatoire avec prise en compte indice de phong
+	double z =Rand(1.0);
+	double phi = Rand(1.0) * 2 * PI;//composante phi aléatoire
+	double theta = acos(pow(z, 1/(nPhong+1)));//composante theta aléatoire avec prise en compte indice de phong
 
 	double sintheta = sin(theta);
 	//création du rayon
-	vector3 rayon(sintheta*cos(phi), sintheta*sin(phi), cos(theta));
+	vector3 rayon(sintheta*cos(phi), sintheta*sin(phi), z);
 
 	//Alignement avec la normale
-	vector3 t(rand(),rand(),rand());
+	vector3 t(Rand(1.0),Rand(1.0),Rand(1.0));
 	vector3 u = t*normale;
 	u.Normalize();
 	vector3 v = normale*u;
@@ -100,7 +98,7 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 	Reflectance refl = intersection.getObjet()->GetReflectance();
 
 	// Initialise couleur de base de l'objet
-	Couleur couleur = refl.kE;
+	Couleur couleur;
 	//puissance du rayons (tend vers l'annulation après réflexion)
 	double restant = 1.0;
 	//mode de fin du rayon
@@ -129,9 +127,10 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 		couleur += directeIllumination(a_Ray,intersection,refl);
 			double rrMult;
 			if (glossyRoulette(refl.kS, refl.kD, rrMult))
-				couleur += restant*(1.0/(1.0-1.0/rrMult)) * diffusePropagation(a_Ray, intersection, a_Depth);
+				couleur += restant*(1.0/(1.0-1.0/rrMult))*diffusePropagation(a_Ray, intersection, a_Depth);
 			else
 				couleur += restant*rrMult*speculairePropagation(a_Ray,intersection,a_Depth);
+			
 		break;
 	case Mirror:
 		couleur += restant*reflexionPropagation(a_Ray, intersection, a_Depth);
@@ -152,11 +151,7 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 Couleur Engine::directeIllumination(Rayon& ray, Intersection& intersection,Reflectance refl)
 {
 	Couleur couleur;
-	Lumiere** lumiere = maScene->getLumieres();
-	intersection.getPoint().afficher();
-	cout<<intersection.getDistance();
-	ray.getDirection().afficher();
-	system("Pause");
+	Lumiere** lumiere = maScene->getLumieres();	
 	//parcourt des lumieres
 for (int i = 0; i < maScene->getNbLumieres(); i++) {
 		//le rayon entre l'intersection et la lumiere
@@ -168,7 +163,7 @@ for (int i = 0; i < maScene->getNbLumieres(); i++) {
 			lightIncidence.Normalize();
 			if (refl.kD != Couleur::black)//si la composante est diffuse
 				couleur += diffuse(intersection, lightIncidence,lumiere[i]->getIntensity(intersection.getPoint()),refl);
-
+				
 			if (refl.kS != Couleur::black)//si la composante est speculaire
 				couleur += speculaire(intersection, lightIncidence,lumiere[i]->getIntensity(intersection.getPoint()),ray,refl);
 		}
@@ -186,8 +181,7 @@ bool Engine::intersectShadowRay(Rayon& ray) {
 Couleur Engine::diffuse( Intersection& intersection, const vector3& incidence, const Couleur& color,Reflectance refl) {
 	vector3 normale(intersection.getNormal());
 	vector3 incidant(incidence);
-	intersection.afficher();
-	return refl.kD*color* MAX(normale.Dot(incidant),0.0);
+	return refl.kD*color*MAX(normale.Dot(incidant),0.0);
 }
 
 //calcul de la composante speculaire éclairage direct
@@ -195,51 +189,48 @@ Couleur Engine::speculaire( Intersection& intersection,vector3& incidence, const
 	vector3 reflechi =-rayonReflexion(incidence,intersection.getNormal());
 	vector3 vuRay = -viewRay.getDirection();
 	vuRay.Normalize();
-	double scalarTerm = MAX(reflechi.Dot(vuRay),0);
-
-	return refl.kS*color*pow(scalarTerm,refl.pExp);
+	return refl.kS*color*pow(MAX(reflechi.Dot(vuRay),0),refl.pExp);
 }
 
 
 Couleur Engine::diffusePropagation(Rayon& ray, Intersection& intersection, int depth){
-	//apport de la composante diffuse
-	Couleur diffusComp = intersection.getObjet()->GetReflectance().kD;
 	//nouvelle direction
-	vector3 rayDir = MonteCarlo(intersection.getNormal(),1);
+	vector3 rayDir = MonteCarlo(intersection.getNormal(),1.0);
 	//creation nouveau rayon 
 	Rayon newRay(intersection.getPoint(),rayDir);
 	//on relance le calcul avec la nouvelle direction
-	Couleur diffColor = Raytracer(newRay, depth + 1);
-
+	Couleur diffColor = Raytracer(newRay,depth+1);
+		
+	//apport de la composante diffuse
+	Couleur diffusComp = intersection.getObjet()->GetReflectance().kD;
 	//brdf = kD/PI
 	if (config.echantillonType == UNIFORME)// Probablity: 1/(2PI) -- (1/probability)*cos(theta)*brdf*radiancealongray
 		return 2 * (intersection.getNormal().Dot(rayDir))*diffusComp*diffColor;
-	else if (config.echantillonType == IMPORTANCE)// Probability: cos(theta)/PI -- (1/probability)*cos(theta)*brdf*radiancealongray	
+	else// Probability: cos(theta)/PI -- (1/probability)*cos(theta)*brdf*radiancealongray	
 		return diffusComp*diffColor;
-	else return Couleur::black;
+
 }
 
 Couleur Engine::speculairePropagation(Rayon& ray, Intersection& intersection, int depth){
 	//apport de la composante spécaulaire
 	Reflectance refl = intersection.getObjet()->GetReflectance();
 	//direction réfléchie
-	vector3 reflexionDir = rayonReflexion(ray.getDirection(), intersection.getNormal());
+	vector3 reflexionDir = rayonReflexion(ray.getDirection(),intersection.getNormal());
 	reflexionDir.Normalize();
 	//nouvelle direction
 	vector3 rayDir = MonteCarlo(reflexionDir, refl.pExp);
     //creation nouveau rayon 
 	Rayon newRay(intersection.getPoint(),rayDir);
+
 	//on relance le calcul avec la nouvelle direction
     Couleur specColor = Raytracer(newRay,depth+1);
-    
+	//specColor.afficher();
+
 	// brdf = kS(pExp+1)/(2PI)
-	if (config.echantillonType == UNIFORME)
-		// Probablity: 1/(2PI) -- (1/probability)*cos(theta)*brdf*radiancealongray
-		return pow(rayDir.Dot(reflexionDir),refl.pExp) *(rayDir.Dot(intersection.getNormal())) * refl.kS * (refl.pExp+1) * specColor;
-	else if (config.echantillonType == IMPORTANCE)
-		// Probability: cos^pExp(theta)*(pExp+1)/(2PI) -- (1/probability)*cos(theta)*brdf*radiancealongray
-		return refl.kS * specColor*(rayDir.Dot(intersection.getNormal()));
-	else return Couleur::black;
+	if (config.echantillonType == UNIFORME)// Probablity: 1/(2PI) -- (1/probability)*cos(theta)*brdf*radiancealongray
+		return refl.kS*specColor*pow(rayDir.Dot(reflexionDir),refl.pExp) *(rayDir.Dot(intersection.getNormal())) * (refl.pExp+1) ;
+	else// Probability: cos^pExp(theta)*(pExp+1)/(2PI) -- (1/probability)*cos(theta)*brdf*radiancealongray
+		return refl.kS*specColor*(rayDir.Dot(intersection.getNormal()));
 }
 
 
@@ -254,7 +245,6 @@ Couleur Engine::reflexionPropagation(Rayon& ray, Intersection& intersection, int
 	//on relance
 	reflColor = Raytracer(newRayon,depth+1);
 
-	//Si Reflexion
 	if (refl.kT == Couleur::black)
 		return refl.kR*reflColor;
 	else
@@ -385,13 +375,10 @@ bool Engine::Render(){
 			dir.Normalize();
 			Rayon r(origineCam, dir);
 			 //on procède au calcul 
-			acc+=Raytracer( r, 0);
+			acc+=Raytracer(r,0);
 			}
-
-
 			//moyenne sur tous les rayons
 			acc = acc /(pow((float)config.nbLancerParPixel,2));
-
 			//clamper la couleur
 			acc.clamp();
 			//transformation en RGB standard

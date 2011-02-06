@@ -41,6 +41,7 @@ public:
 	void operator *= ( double f ) { x *= f; y *= f; z *= f; }
 	void operator *= ( vector3& a_V ) { x *= a_V.x; y *= a_V.y; z *= a_V.z; }
 	void operator *= ( vector3* a_V ) { x *= a_V->x; y *= a_V->y; z *= a_V->z; }
+	bool operator==(vector3& a_V) { return x== a_V.x&& y == a_V.y&& z == a_V.z; }
 	vector3 operator- () const { return vector3( -x, -y, -z ); }
 	friend vector3 operator + ( const vector3& v1, const vector3& v2 ) { return vector3( v1.x + v2.x, v1.y + v2.y, v1.z + v2.z ); }
 	friend vector3 operator - ( const vector3& v1, const vector3& v2 ) { return vector3( v1.x - v2.x, v1.y - v2.y, v1.z - v2.z ); }
@@ -63,8 +64,6 @@ protected:
  vector3 v[3];
 
 public:
-// Constructors
-
 mat3();
 mat3( vector3& v0,  vector3& v1, vector3& v2);
 
@@ -81,7 +80,7 @@ inline mat3::mat3( vector3& v0,  vector3& v1,  vector3& v2)
 inline vector3 operator * (const mat3& a, const vector3& v) {
 #define ROWCOL(i) a.v[i].x*v.x + a.v[i].y*v.y+ a.v[i].z*v.z
     return vector3(ROWCOL(0), ROWCOL(1), ROWCOL(2));
-#undef ROWCOL // (i)
+#undef ROWCOL
 }
 
 inline mat3 mat3::transpose() const {

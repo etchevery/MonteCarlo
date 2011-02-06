@@ -24,8 +24,8 @@ void initConf(Configuration& config){
 	config.echantillonType=IMPORTANCE;
 	config.indirectLighting=true;
 	config.russianRoulette=true;
-	config.profondeur=1;
-	config.nbLancerParPixel=1;
+	config.profondeur=4;
+	config.nbLancerParPixel=10;
 	config.filename="Sphere.xml";
 }
 

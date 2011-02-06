@@ -16,6 +16,10 @@ void PointLumiere::initFromXML(TiXmlHandle hObj){
 	pElem->QueryDoubleAttribute("z", &z);
 
 	this->position.Set(x,y,z);
+	this->falloff[0]=1.0;
+	this->falloff[1]=0.0;
+	this->falloff[2]=0.0;
+
 }
 
 

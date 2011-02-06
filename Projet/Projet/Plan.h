@@ -1,9 +1,13 @@
-#pragma once
-
-#include "stdafx.h"
+#ifndef PLAN_H
+#define PLAN_H
 #include "Objet.h"
-#include "tinyxml.h"
-#include <tinyxml.h>
+#include "Intersection.h"
+#include "Rayon.h"
+#include "common.h"
+
+
+
+using namespace std;
 class Plan : public Objet{
 private:
 			vector3 u;
@@ -23,7 +27,12 @@ public :
 	void setW(vector3 w){this->w=w;};
 
 	void initFromXML(TiXmlHandle hObj);
+
+	bool operator ==( Plan& P);
+
 	void afficher();
 	Intersection intersect (Rayon* r);
     vector3 normale();
 };
+
+#endif // PLAN_H
