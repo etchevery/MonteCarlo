@@ -120,7 +120,7 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 	switch(refl.type){
 	case Diffuse:
 		couleur += directeIllumination(a_Ray,intersection,refl);
-		couleur += restant*diffusePropagation(a_Ray,intersection,a_Depth);
+		//couleur += restant*diffusePropagation(a_Ray,intersection,a_Depth);
 		break;
 	case Glossy:
 		couleur += directeIllumination(a_Ray,intersection,refl);
@@ -140,8 +140,10 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 		bool refracte = calculRefraction(a_Ray, intersection, refrRay, schlick);
 		couleur += restant*schlick*reflexionPropagation(a_Ray, intersection, a_Depth);
 
-		if (refracte)
+		if (refracte){
 		couleur += restant*(1-schlick)*refractionPropagation(refrRay,intersection,a_Depth);
+		}
+
 		break;
 	}
 	return couleur;
@@ -281,7 +283,7 @@ bool Engine::calculRefraction(Rayon& ray, Intersection& intersection, Rayon& ref
 		nt = 1.0;
 	}
 	//savoir si le rayon est entièrement réfléchie ou réfracté
-	bool refracted = isRefracte(direction,normal, intersection, n, nt, refractDirection);
+	bool refracted = isRefracte(direction,normal, n, nt, refractDirection);
 	// Calcul de l'approximation de Schlick  des equations de Fresnel 
 	if (refracted){
 	vector3 d  = ray.getDirection();
@@ -289,12 +291,13 @@ bool Engine::calculRefraction(Rayon& ray, Intersection& intersection, Rayon& ref
 	vector3 rd = refractDirection;
 	rd.Normalize();
 	refrRay = Rayon(intersection.getPoint(),refractDirection);
+
 	schlick = calculSchlick(n, nt, d, rd,intersection.getNormal());
 	}
 	return refracted;
 }
 
-bool Engine::isRefracte(vector3 direction, vector3 normal,  Intersection& intersect, double oldIndex, double newIndex, vector3& refractDirection) {
+bool Engine::isRefracte(vector3 direction, vector3 normal, double oldIndex, double newIndex, vector3& refractDirection) {
     double n = oldIndex/newIndex;
     double c = direction.Dot(normal);
     double cosPhi2 = (1 - ((n * n) * (1 - (c * c))));
@@ -325,6 +328,8 @@ double Engine::calculSchlick(double n, double nt, vector3& rayDir, vector3& refr
 Couleur Engine::refractionPropagation(Rayon& ray,Intersection& intersection, int depth) {
 	Reflectance refl = intersection.getObjet()->GetReflectance();
 	Couleur coef = refl.kT;
+	Couleur a = Raytracer(ray, depth+1);
+	a.afficher();
 	return coef * Raytracer(ray, depth+1);
 }
 // -----------------------------------------------------------

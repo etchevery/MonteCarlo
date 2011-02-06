@@ -23,10 +23,10 @@ void initConf(Configuration& config){
 	config.directLighting=true;
 	config.echantillonType=IMPORTANCE;
 	config.indirectLighting=true;
-	config.russianRoulette=true;
-	config.profondeur=1;
-	config.nbLancerParPixel=4;
-	config.filename="Objet.xml";
+	config.russianRoulette=false;
+	config.profondeur=2;
+	config.nbLancerParPixel=1;
+	config.filename="Sphere.xml";
 }
 
 void DrawWindow();
