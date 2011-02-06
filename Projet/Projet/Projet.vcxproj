@@ -90,6 +90,7 @@
     <ClInclude Include="Materiau.h" />
     <ClInclude Include="Objet.h" />
     <ClInclude Include="Plan.h" />
+    <ClInclude Include="Polygone.h" />
     <ClInclude Include="Rayon.h" />
     <ClInclude Include="raytracer.h" />
     <ClInclude Include="Scene.h" />
@@ -109,6 +110,7 @@
     <ClCompile Include="Materiau.cpp" />
     <ClCompile Include="Objet.cpp" />
     <ClCompile Include="Plan.cpp" />
+    <ClCompile Include="Polygone.cpp" />
     <ClCompile Include="Rayon.cpp" />
     <ClCompile Include="raytracer.cpp" />
     <ClCompile Include="Scene.cpp" />
