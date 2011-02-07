@@ -36,6 +36,8 @@
 	double dy=r->getDirection().y; double py=r->getPosition().y;
 	double dz=r->getDirection().z; double pz=r->getPosition().z;
 
+		clock_intersect_triangle.begin(); // ---> start clock_intersect_triangle
+
 	vector3 E;
 	vector3 AB=B-A; //vecteur AB
 	vector3 AC=C-A; //vecteur AC
@@ -70,6 +72,8 @@
 			}
 		}
 	}
+	clock_intersect_triangle.end(); // ---> end clock_intersect_triangle
+
 }
 
 	Intersection::~Intersection()

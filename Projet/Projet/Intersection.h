@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stdafx.h"
+#include "timing.h"
 
 class Objet;
 

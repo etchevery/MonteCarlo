@@ -1,13 +1,15 @@
 #ifndef PLAN_H
 #define PLAN_H
+
 #include "Objet.h"
 #include "Intersection.h"
 #include "Rayon.h"
 #include "common.h"
-
-
+#include "timing.h"
 
 using namespace std;
+
+
 class Plan : public Objet{
 private:
 			vector3 u;
@@ -35,7 +37,6 @@ public :
 
 	void afficher();
 	Intersection intersect (Rayon* r);
-	Intersection intersect2 (Rayon* r);
     vector3 normale();
 };
 

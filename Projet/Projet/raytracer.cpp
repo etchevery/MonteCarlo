@@ -96,7 +96,6 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 		return Couleur::black;
 	}
 
-
 	//on récupère les informations de matériaux (couleurs)
 	Reflectance refl = intersection.getObjet()->GetReflectance();
 

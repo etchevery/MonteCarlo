@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "Plan.h"
 #include "Tetraedre.h"
 
 Tetraedre::Tetraedre(){	
@@ -73,6 +72,8 @@ Intersection Tetraedre::intersect (Rayon* r)
 
     Intersection inter, inter_tmp, I[4];
 
+		clock_intersect_tetraedre.begin(); // ---> start clock_intersect_triangle
+
 	I[0]=Intersection(this,r, this->a,this->b,this->c);
 	I[1]=Intersection(this,r, this->c,this->d,this->a);
 	I[2]=Intersection(this,r, this->a,this->b,this->d);
@@ -91,6 +92,9 @@ Intersection Tetraedre::intersect (Rayon* r)
 	}
 
 	inter.setObjet(this);
+
+	clock_intersect_tetraedre.end(); // ---> end clock_intersect_tetraedre
+
 	return(inter);
 
 }	

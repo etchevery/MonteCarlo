@@ -163,6 +163,8 @@ void Scene::afficherScene(){
 		bool isIntersect = false;  //par défaut pas d'intersection
 		double d_min=DBL_MAX; 
 
+		clock_intersect_program.start(); //---> start intersect clock
+
 		//on parcourt tous les objets
 		for(int i=0;i<nbObjet;i++){
 			//si le rayon intersecte l'objet
@@ -174,5 +176,8 @@ void Scene::afficherScene(){
 				d_min=I.getDistance();
 			}
 		}	
+	
+		clock_intersect_program.end(); //---> end intersect clock
+
 		return isIntersect;
 	}
