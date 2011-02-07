@@ -4,6 +4,9 @@
 #include "surface.h"
 #include "Config.h"
 
+#include <Windows.h>
+#include <time.h>
+
 #define SCRWIDTH	400
 #define SCRHEIGHT	200
 
@@ -29,6 +32,41 @@ void initConf(Configuration& config){
 	config.filename="Objet.xml";
 }
 
+void SaveImage(const char* NomFichier,Couleur* img){
+	FILE *out =fopen(NomFichier,"w" ); 
+	int i; 
+	fprintf(out,"P3\n");
+	fprintf(out,"%d",SCRWIDTH);
+	fprintf(out," ");
+	fprintf(out,"%d",SCRHEIGHT);
+	fprintf(out,"\n255\n" ); 
+	
+	for(i=0;i<SCRHEIGHT*SCRWIDTH;i++) {
+		fprintf(out,"%d %d %d ",int(img[i].r),int(img[i].g),int(img[i].b)); 	
+	}
+	fclose(out); 
+}
+
+void SaveLogFile(const char* NomFichier,Configuration config, double duree){
+	FILE *out =fopen(NomFichier,"w" ); 
+	
+	fprintf(out,"Stockage des resultats\n\n");
+	fprintf(out,"-Type d'échantillon : ");
+	if(config.echantillonType==0){
+		 fprintf(out,"UNIFORME\n");
+	}else{
+		fprintf(out,"IMPORTANCE\n");
+	}
+	
+	fprintf(out,"-Activation de lumière directe : %d\n",config.directLighting);
+	fprintf(out,"-Activation de lumière indirecte : %d\n",config.indirectLighting);
+	fprintf(out,"-Activation de la méthode de la roulette russe : %d\n",config.russianRoulette);
+	fprintf(out,"-Fichier testé : %s\n",config.filename);
+	fprintf(out,"-Nombre de lancers de rayons pour chaque pixel : %d\n",config.nbLancerParPixel);
+	fprintf(out,"-Profondeur : %d\n",config.profondeur);
+	fprintf(out,"-Temps d'exécution de la fonction Render(): %f secondes\n",duree);
+	fclose(out); 
+}
 void DrawWindow();
 
 static LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
@@ -107,11 +145,26 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	tracer->SetTarget(surface->GetBuffer(),SCRWIDTH, SCRHEIGHT );
 	int tpos = 60;
 	maScene->afficherScene();
+		
+
 	system("Pause");
 	// go
 	tracer->InitRender();
+	clock_t debut, fin;
+	double duree;
+	debut=clock();
+
+	//La fonction à chronométrer
 	tracer->Render();
 
+	
+	fin=clock();
+	
+	duree=(fin - debut) / CLOCKS_PER_SEC;
+
+	SaveImage("test.ppm",tracer->GetImage());
+	
+	SaveLogFile("Resultat.log",config,duree);
 	while (1)
 	{
 		DrawWindow();

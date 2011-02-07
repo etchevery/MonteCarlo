@@ -349,15 +349,17 @@ void Engine::InitRender()
 bool Engine::Render(){
 
 	//ici notre camera
-	vector3 origineCam( 0, 0, -5);
+	vector3 origineCam(this->maScene->getCamera()->getPosition());
 
 	// reset last found primitive pointer
 	int pos = 0;
+	int pos1 = 0;
 	int totalPixels = m_Height*m_Width;
 	int avancement=0,pourcentage =0;
 	Couleur acc;
 	float pasPixel=1.0f/(float)config.nbLancerParPixel;
 
+	img_color = new Couleur[totalPixels];
 	// Boucle sur les pixel de l'écran
 	for ( int y = 0; y < m_Height; y++ )
 	{
@@ -384,7 +386,17 @@ bool Engine::Render(){
 			acc.ToRgb();
 
 			m_Dest[pos++] = (int(acc.r) << 16) + (int(acc.g) << 8) + int(acc.b);
-			
+			/*if(int(acc.r)!=0) cout<<int(acc.r)<<endl;
+			if(int(acc.g)!=0) cout<<int(acc.g)<<endl;
+			if(int(acc.b)!=0) cout<<int(acc.b)<<endl;*/
+
+			img_color[pos1] = acc;
+			/*if(int(acc.r)!=0) {
+				cout<<int(acc.r)<<endl;
+				img_color[pos1].afficher();
+				system("pause");
+			}*/
+			pos1++;
 			//pixel suivant axe 0X
 			m_SX += m_DX;
 			avancement++;
@@ -394,6 +406,7 @@ bool Engine::Render(){
 		//Pixel suivant axe 0Y
 		m_SY += m_DY;
 	}
+	
 	// all done
 	return true;
 }

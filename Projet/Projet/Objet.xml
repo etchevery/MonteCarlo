@@ -8,5 +8,5 @@
 
 
 
-<Camera x_pos="1.0" y_pos="0.1" z_pos="0.5" x_look="1.0" y_look="1.0" z_look="1.0"/>
+<Camera x_pos="0.0" y_pos="0.0" z_pos="-1.0" x_look="1.0" y_look="1.0" z_look="1.0"/>
 <Lumiere type="point" red="1.0" green="1.0" blue="1.0" x="0.0" y="3.0" z="-4.0"/>

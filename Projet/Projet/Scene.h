@@ -26,6 +26,7 @@ public:
 	int getNbObjets(){return nb_obj;};
 	Lumiere** getLumieres(){return tab_lum;};
 	int getNbLumieres(){return nb_lum;};
+	Camera* getCamera(){return camera;};
 	bool intersect(Rayon& r, Intersection& I);
 
 };
