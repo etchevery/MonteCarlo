@@ -54,7 +54,7 @@ void Sphere::afficher(){
 	 * (dx²+dy²+dz²)t²+2*(dx.px+dy.py+dz.pz)t+((px-c_x)²+(py-c_y)²+(pz-c_z)²-rayon²)=0
 	 * at²+bt+c=0
 	 */
-Intersection Sphere::intersect2(Rayon* r)
+Intersection Sphere::intersect(Rayon* r)
 {
 	Intersection inter;
 	double a;
@@ -129,7 +129,7 @@ Intersection Sphere::intersect2(Rayon* r)
 //il n'existe qu'un seul grand cercle passant par A et B (représenté en bleu sur la figure). 
 //Comme (OH) est un diamètre perpendiculaire à la corde [AB] alors (OH) est médiatrice de [AB].
 
- Intersection Sphere::intersect(Rayon* r)
+ Intersection Sphere::intersect2(Rayon* r)
 {
 	Intersection inter;
 	double ah,bh;
@@ -213,3 +213,98 @@ Intersection Sphere::intersect2(Rayon* r)
 		return p-(*this).getCentre();
 	}
 
+	
+Sphere::Sphere(vector3 Sommets[], int n)
+{
+	Sphere S;
+	int i;
+	double xMin, xMax;
+	double yMin, yMax;
+	double zMin, zMax;
+	int ixMin, jyMin, kzMin;
+	int ixMax, jyMax, kzMax;
+	vector3 dSx, dSy, dSz, dS; //vecteur diamètre
+	double dx, dy, dz; //la norme au carrée des vecteurs diamètres
+	double rayon, rayonCarre; //rayon
+	vector3 C; //centre du cercle
+	vector3 vtmp; //vecteur tmp
+	double d;
+
+	//initialisation des valeurs et indices minimales et maximales.
+	ixMin=jyMin=kzMin=0;
+	ixMax=jyMax=kzMax=0;
+	xMin=xMax=Sommets[0].x;
+	yMin=yMax=Sommets[0].y;
+	zMin=zMax=Sommets[0].z;
+
+	//recherche  des valeurs et indices minimales et maximales.
+	for(i=1;i<n;i++){
+		//selon x
+		if(Sommets[i].x<xMin){
+			xMin=Sommets[i].x;
+			ixMin=i;
+		}else if(Sommets[i].x>xMax){
+			xMax=Sommets[i].x;
+			ixMax=i;
+		}
+		//selon y
+		if(Sommets[i].y<yMin){
+			yMin=Sommets[i].y;
+			jyMin=i;
+		}else if(Sommets[i].y>yMax){
+			yMax=Sommets[i].y;
+			jyMax=i;
+		}
+		//selon z
+		if(Sommets[i].z<zMin){
+			zMin=Sommets[i].z;
+			kzMin=i;
+		}else if(Sommets[i].z>zMax){
+			zMax=Sommets[i].z;
+			kzMax=i;
+		}
+	}
+	//initialisation diamètre du sphère selon les 3 directions
+	dSx=Sommets[ixMax]-Sommets[ixMin];
+	dSy=Sommets[jyMax]-Sommets[jyMin];
+	dSz=Sommets[kzMax]-Sommets[kzMin];
+	//calcul
+	dx=dSx.Dot(dSx); 
+	dy=dSy.Dot(dSy);
+	dz=dSy.Dot(dSz);
+
+	if(dx>=dy && dx>=dz){  //le plus grand rayon est selon x
+		C=Sommets[ixMin]+(0.5*dSx); //le centre le point milieu des deux extrêmes 
+		vtmp=Sommets[ixMax]-C;
+		rayonCarre=vtmp.Dot(vtmp);
+	}else if(dy>=dx && dy>=dz){  //le plus grand rayon est selon y
+		C=Sommets[jyMin]+(0.5*dSy); //le centre le point milieu des deux extrêmes 
+		vtmp=Sommets[jyMax]-C;
+		rayonCarre=vtmp.Dot(vtmp);
+	}else{ //sinon c'est selon z
+		C=Sommets[kzMin]+(0.5*dSz); //le centre le point milieu des deux extrêmes 
+		vtmp=Sommets[kzMax]-C;
+		rayonCarre=vtmp.Dot(vtmp);
+	}
+
+	rayon=sqrt(rayonCarre);
+
+	//On vérifie si tous les points appartiennent au cercle
+	//si non on prend un sphere un peu plus grand qui les contiennent.
+	for(i=0;i<n;i++){
+		dS=Sommets[i]-C;
+		d=dS.Dot(dS);
+		//si le point n'est pas dans le sphere
+		if(d>rayonCarre){
+			//on prend un sphère plus grand qui l'inclu
+			d=sqrt(d);
+			rayon=0.5*(rayon+d); 
+			rayonCarre=pow(rayon,2);
+			C=((d-rayon)/d)*dS; //on déplace le centre
+		}
+	}
+
+	this->setCenter(C);
+	this->setRayon(rayon);
+
+}

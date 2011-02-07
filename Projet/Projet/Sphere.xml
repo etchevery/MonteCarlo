@@ -1,27 +1,19 @@
 <?xml version="1.0" ?>
 
-
-<Plan x1="0.0" y1="0.0" z1="8.0" x2="1.0" y2="0.0" z2="8.0" x3="0.0" y3="1.0" z3="8.0">
-	<Materiau BRDF="Diffuse" Phong="0.6" Refr="0.7">
-			<kD red="0.0" green="1.0" blue="0.0" />
-	</Materiau>
-</Plan>
-<Plan x1="-5.0" y1="0.0" z1="0.0" x2="-5.0" y2="1.0" z2="0.0" x3="-5.0" y3="0.0" z3="1.0">
-	<Materiau BRDF="Diffuse" Phong="0.6" Refr="0.7">
-			<kD red="1.0" green="0.0" blue="0.0" />
-	</Materiau>
-</Plan>
-<Plan x1="5.0" y1="0.0" z1="0.0" x2="5.0" y2="1.0" z2="0.0" x3="5.0" y3="0.0" z3="1.0">
-	<Materiau BRDF="Diffuse" Phong="0.6" Refr="0.7">
+<Sphere rayon="3.0" x="0.0" y="0.0" z="4.0">
+	<Materiau BRDF="Diffuse" Phong="1.0" Refr="1.511">
 			<kD red="0.0" green="0.0" blue="1.0" />
 	</Materiau>
-</Plan>
+</Sphere>
 
-<Plan x1="0.0" y1="-2.0" z1="0.0" x2="0.0" y2="-2.0" z2="1.0" x3="1.0" y3="-2.0" z3="0.0">
-	<Materiau BRDF="Diffuse" Phong="0.6" Refr="0.7">
-			<kD red="1.0" green="1.0" blue="1.0" />
+
+<Sphere rayon="1.0" x="0.0" y="0.0" z="1.0">
+	<Materiau BRDF="Dielectric" Phong="1.0" Refr="1.511">
+			<kT red="1.0" green="1.0" blue="0.0" />
 	</Materiau>
-</Plan>
+</Sphere>
+
 
 <Camera x_pos="1.0" y_pos="0.1" z_pos="0.5" x_look="1.0" y_look="1.0" z_look="1.0"/>
-<Lumiere type="point" red="1.0" green="1.0" blue="1.0" x="3.0" y="3.0" z="2.0"/>
+<Lumiere type="point" red="1.0" green="1.0" blue="1.0" x="1.0" y="1.0" z="4.0"/>
+<Lumiere type="point" red="1.0" green="1.0" blue="1.0" x="1.0" y="1.0" z="0.0"/>

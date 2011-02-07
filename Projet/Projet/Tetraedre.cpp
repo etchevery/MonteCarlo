@@ -76,7 +76,7 @@ Intersection Tetraedre::intersect (Rayon* r)
 	I[0]=Intersection(this,r, this->a,this->b,this->c);
 	I[1]=Intersection(this,r, this->c,this->d,this->a);
 	I[2]=Intersection(this,r, this->a,this->b,this->d);
-	I[3]=Intersection(this,r, this->a,this->b,this->d);
+	I[3]=Intersection(this,r, this->b,this->c,this->d);
 
 	double d_min=I[0].getDistance(); 
 	inter=I[0];

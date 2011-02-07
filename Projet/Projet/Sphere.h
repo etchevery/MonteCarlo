@@ -6,7 +6,7 @@
 #include <iostream>
 #include "Intersection.h"
 #include "Rayon.h"
-#include "common.h"
+
 using namespace std;
 
 class Sphere : public Objet{
@@ -28,7 +28,7 @@ public :
 	void setX(double x){centre_x=x;};
 	void setY(double y){centre_y=y;};
 	void setZ(double z){centre_z=z;};
-
+	void setCenter(vector3 c){centre_x=c.x;centre_y=c.y;centre_z=c.z;}
 	void initFromXML(TiXmlHandle hObj);
 	
     bool operator ==( Sphere& S);
@@ -38,6 +38,7 @@ public :
 	Intersection intersect(Rayon* r);
 	Intersection intersect2(Rayon* r);
 	vector3 normale(vector3 p);
+	Sphere(vector3 Sommets[], int n); //volume englobante
 };
 
 #endif // SPHERE_H

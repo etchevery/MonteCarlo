@@ -8,28 +8,26 @@ Plan::Plan(){
 }
 
 
-Plan::Plan(vector3 a,vector3 b,vector3 c){
+Plan::Plan(vector3 a,vector3 b,vector3 c,vector3 d){
 	
 	this->u=a;
 	this->v=b;
 	this->w=c;
+	this->x=d;
 }
 
 Plan::~Plan(){
 }
 
 bool Plan::operator ==( Plan& P){
- bool test=false;
- if(this->u==P.u && this->v==P.v && this->w==P.w)
-	test=true;
-
- return test;
+return(this->u==P.u && this->v==P.v && this->w==P.w);
 }
 
 void Plan::initFromXML(TiXmlHandle hObj){
 	double x1, y1, z1;
 	double x2, y2, z2;
 	double x3, y3, z3;
+	double x4, y4, z4;
 
 	Objet::initFromXML(hObj);
 	TiXmlElement* pElem=hObj.Element();
@@ -43,10 +41,14 @@ void Plan::initFromXML(TiXmlHandle hObj){
 	pElem->QueryDoubleAttribute("x3", &x3);
 	pElem->QueryDoubleAttribute("y3", &y3);
 	pElem->QueryDoubleAttribute("z3", &z3);
+	pElem->QueryDoubleAttribute("x4", &x4);
+	pElem->QueryDoubleAttribute("y4", &y4);
+	pElem->QueryDoubleAttribute("z4", &z4);
 
 	this->setU(vector3(x1,y1,z1));
 	this->setV(vector3(x2,y2,z2));
 	this->setW(vector3(x3,y3,z3));
+	this->setX(vector3(x4,y4,z4));
 }
 
 
@@ -56,11 +58,12 @@ void Plan::afficher(){
 	this->u.afficher();
 	this->v.afficher();
 	this->w.afficher();
+	this->x.afficher();
 	Objet::afficher();
 }
 
 
-Intersection Plan::intersect (Rayon* r)
+Intersection Plan::intersect2 (Rayon* r)
   {
 
     Intersection inter;
@@ -93,7 +96,7 @@ Intersection Plan::intersect (Rayon* r)
 		//si O appartient à (P)
 		if(N.x*px+N.y*py+N.z*pz+d==0)
 		{
-			//rayon est dans le plan
+			inter.setDistance(DBL_MAX); //pas d'intersection  //rayon est dans le plan
 		}else{
 			inter.setDistance(DBL_MAX); //pas d'intersection
 		}
@@ -107,12 +110,11 @@ Intersection Plan::intersect (Rayon* r)
 			t=q/p;   //TODO: vérifier si p peut-être null
 
 			if(t>EPSILON){
-			inter.setPoint(vector3(t * r->getDirection().x + r->getPosition().z,
-								t * r->getDirection().y + r->getPosition().y,
-								t * r->getDirection().z + r->getPosition().z));
-			inter.setDistance( (inter.getPoint()-r->getPosition()).Length() );
-			inter.setNormal(N);
-	
+				inter.setPoint(vector3(t * r->getDirection().x + r->getPosition().z,
+									t * r->getDirection().y + r->getPosition().y,
+									t * r->getDirection().z + r->getPosition().z));
+				inter.setDistance( (inter.getPoint()-r->getPosition()).Length() );
+				inter.setNormal(N);
 			}else{
 			inter.setDistance(DBL_MAX);
 			}
@@ -121,7 +123,28 @@ Intersection Plan::intersect (Rayon* r)
 
 	return(inter);
 }
-		
+
+Intersection Plan::intersect (Rayon* r)
+  {
+
+    Intersection inter, inter_tmp, inter_Sphere;
+
+	vector3 Sommets[4]={this->u,this->v,this->w,this->x};
+	Sphere S(Sommets,4); //sphere englobant du plan
+     
+	inter_Sphere=S.intersect(r);
+	if(inter_Sphere.getDistance()<DBL_MAX){
+		inter_tmp=Intersection(this,r, this->u,this->v,this->w);
+		if(inter_tmp.getDistance()<DBL_MAX){
+			inter=inter_tmp;
+		}else{
+			inter=Intersection(this,r, this->u,this->w,this->x);
+		}
+	}
+	inter.setObjet(this);
+	return(inter);
+}
+
 
 	vector3 Plan::normale()
 	{
