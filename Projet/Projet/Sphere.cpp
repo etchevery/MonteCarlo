@@ -52,7 +52,10 @@ void Sphere::afficher(){
 	 * equation du sphere (x-c_x)²+(y-c_y)²+(z-z_y)²=rayon²   {centre (c_x,c_y,c_z)}
 	 * (dx.t+px-c_x)²+(dy.t+py-c_y)²+(dz.t+pz-c_z)²=rayon²
 	 * (dx²+dy²+dz²)t²+2*(dx.px+dy.py+dz.pz)t+((px-c_x)²+(py-c_y)²+(pz-c_z)²-rayon²)=0
-	 * at²+bt+c=0
+	 * at²+2*bt+c=0
+	 * delta=4b²-4*a*c=4(b²-ac); on pose delta=1/4(delta) car est de signe de b²-ac
+	 * x1=(-2b-sqrt(4(b²-ac)))/2a=(-b-sqrt(b²-ac))/a
+	 * x2=(-b+sqrt(b²-ac))/a
 	 */
 Intersection Sphere::intersect(Rayon* r)
 {
@@ -80,9 +83,10 @@ Intersection Sphere::intersect(Rayon* r)
 	  if (delta <= 0) {
 		  inter.setDistance(DBL_MAX); //distance infinie (pas d'intersection)
 	  } else { //deux solutions
-
-		  t1 = (-b + sqrt (delta)) / a;
-		  t2 = (-b - sqrt (delta)) / a;
+		  double inv_a=1/a;
+		  t1 = inv_a*(-b + sqrt (delta));
+		  //optimisation du calcul de t2: t2 = inv_a*(-b - sqrt (delta));
+		  t2=inv_a*(-2*b-a*t1);
 		  //les deux solutions sont très très proche de 0 (assimilable à deux nombres négatifs en info)
 		  if (t1 <= EPSILON && t2 <= EPSILON){
 			inter.setDistance(DBL_MAX);

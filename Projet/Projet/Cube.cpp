@@ -84,7 +84,7 @@ Cube::Cube(void)
 			double d_min=DBL_MAX; 
 
 			//on parcourt les 6 faces du cube 
-			for(int j=0;j<12;j+2){
+			for(int j=0;j<12;j++){
 				A=this->Sommets[FacesTriangle[j][0]];
 				B=this->Sommets[FacesTriangle[j][1]];
 				C=this->Sommets[FacesTriangle[j][2]];
@@ -101,6 +101,7 @@ Cube::Cube(void)
 					inter=inter_tmp;
 					d_min=inter.getDistance();
 				}
+				j++; //on passe à un autre face
 			}
 	}
 
