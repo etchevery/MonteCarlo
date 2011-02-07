@@ -23,8 +23,8 @@ void initConf(Configuration& config){
 	config.directLighting=true;
 	config.echantillonType=IMPORTANCE;
 	config.indirectLighting=true;
-	config.russianRoulette=true;
-	config.profondeur=1;
+	config.russianRoulette=false;
+	config.profondeur=2;
 	config.nbLancerParPixel=10;
 	config.filename="Objet.xml";
 }
@@ -102,6 +102,17 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	maScene->chargerScene(config.filename);
 	maScene->afficherScene();
 
+	/*
+	vector3 Sommets[8];
+	Rayon RS=Rayon(0.0,3.0,0.0,0.0,-1.0,0.0);
+	Sommets[0]=vector3(-1.0,1.0,1.0);Sommets[1]=vector3(1.0,1.0,1.0);
+	Sommets[2]=vector3(1.0,-1.0,1.0);Sommets[3]=vector3(-1.0,-1.0,1.0);
+	Sommets[4]=vector3(-1.0,1.0,-1.0);Sommets[5]=vector3(1.0,1.0,-1.0);
+	Sommets[6]=vector3(1.0,-1.0,-1.0);Sommets[7]=vector3(-1.0,-1.0,-1.0);
+	Cube C(Sommets);
+	Intersection I=C.intersect(&RS);
+	I.afficher();*/
+
 	tracer = new Engine(config);
 	tracer->SetScene(maScene);
 	tracer->SetTarget(surface->GetBuffer(),SCRWIDTH, SCRHEIGHT );
@@ -118,6 +129,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	}
 	
 	system("PAUSE");
+
 FreeConsole();  // Close the console window
 	return 1;
 }
