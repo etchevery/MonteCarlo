@@ -4,8 +4,11 @@
 #include "surface.h"
 #include "Config.h"
 
+#include <Windows.h>
+#include <time.h>
+
 #define SCRWIDTH	400
-#define SCRHEIGHT	200
+#define SCRHEIGHT	300
 
 static WNDCLASS wc;
 static HWND wnd;
@@ -21,14 +24,49 @@ Surface* surface=0;
 //mettre tous les paramèters
 void initConf(Configuration& config){
 	config.directLighting=true;
-	config.echantillonType=IMPORTANCE;
 	config.indirectLighting=true;
+	config.echantillonType=UNIFORME;
 	config.russianRoulette=false;
-	config.profondeur=5;
-	config.nbLancerParPixel=10;
-	config.filename="Sphere2.xml";
+	config.profondeur=0;
+	config.nbLancerParPixel=1;
+	config.filename="Salle.xml";
 }
 
+void SaveImage(const char* NomFichier,Couleur* img){
+	FILE *out =fopen(NomFichier,"w" ); 
+	int i; 
+	fprintf(out,"P3\n");
+	fprintf(out,"%d",SCRWIDTH);
+	fprintf(out," ");
+	fprintf(out,"%d",SCRHEIGHT);
+	fprintf(out,"\n255\n" ); 
+	
+	for(i=0;i<SCRHEIGHT*SCRWIDTH;i++) {
+		fprintf(out,"%d %d %d ",int(img[i].r),int(img[i].g),int(img[i].b)); 	
+	}
+	fclose(out); 
+}
+
+void SaveLogFile(const char* NomFichier,Configuration config, double duree){
+	FILE *out =fopen(NomFichier,"w" ); 
+	
+	fprintf(out,"Stockage des resultats\n\n");
+	fprintf(out,"-Type d'échantillon : ");
+	if(config.echantillonType==0){
+		 fprintf(out,"UNIFORME\n");
+	}else{
+		fprintf(out,"IMPORTANCE\n");
+	}
+	
+	fprintf(out,"-Activation de lumière directe : %d\n",config.directLighting);
+	fprintf(out,"-Activation de lumière indirecte : %d\n",config.indirectLighting);
+	fprintf(out,"-Activation de la méthode de la roulette russe : %d\n",config.russianRoulette);
+	fprintf(out,"-Fichier testé : %s\n",config.filename);
+	fprintf(out,"-Nombre de lancers de rayons pour chaque pixel : %d\n",config.nbLancerParPixel);
+	fprintf(out,"-Profondeur : %d\n",config.profondeur);
+	fprintf(out,"-Temps d'exécution de la fonction Render(): %f secondes\n",duree);
+	fclose(out); 
+}
 void DrawWindow();
 
 static LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
@@ -102,22 +140,49 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	maScene->chargerScene(config.filename);
 	maScene->afficherScene();
 
+	/*
+	vector3 Sommets[8];
+	Rayon RS=Rayon(0.0,3.0,0.0,0.0,-1.0,0.0);
+	Sommets[0]=vector3(-1.0,1.0,1.0);Sommets[1]=vector3(1.0,1.0,1.0);
+	Sommets[2]=vector3(1.0,-1.0,1.0);Sommets[3]=vector3(-1.0,-1.0,1.0);
+	Sommets[4]=vector3(-1.0,1.0,-1.0);Sommets[5]=vector3(1.0,1.0,-1.0);
+	Sommets[6]=vector3(1.0,-1.0,-1.0);Sommets[7]=vector3(-1.0,-1.0,-1.0);
+	Cube C(Sommets);
+	Intersection I=C.intersect(&RS);
+	I.afficher();*/
+
 	tracer = new Engine(config);
 	tracer->SetScene(maScene);
 	tracer->SetTarget(surface->GetBuffer(),SCRWIDTH, SCRHEIGHT );
 	int tpos = 60;
 	maScene->afficherScene();
+		
+
 	system("Pause");
 	// go
 	tracer->InitRender();
+	clock_t debut, fin;
+	double duree;
+	debut=clock();
+
+	//La fonction à chronométrer
 	tracer->Render();
 
+	
+	fin=clock();
+	
+	duree=(fin - debut) / CLOCKS_PER_SEC;
+
+	SaveImage("test.ppm",tracer->GetImage());
+	
+	SaveLogFile("Resultat.log",config,duree);
 	while (1)
 	{
 		DrawWindow();
 	}
 	
 	system("PAUSE");
+
 FreeConsole();  // Close the console window
 	return 1;
 }

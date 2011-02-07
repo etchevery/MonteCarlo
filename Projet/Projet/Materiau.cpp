@@ -29,8 +29,7 @@ void Materiau::initFromXML(TiXmlHandle hObj){
 	
 	pElem->QueryDoubleAttribute("Phong", &phong);
 	this->myReflectance.pExp=phong;
-	pElem->QueryDoubleAttribute("Phong", &phong);
-	this->myReflectance.pExp=phong;
+
 	pElem->QueryDoubleAttribute("Refr", &refr);
 	this->myReflectance.indiceRefraction=refr;
 	

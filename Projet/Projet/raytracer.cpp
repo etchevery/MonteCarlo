@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "raytracer.h"
+#include <omp.h>
 
 
 Engine::Engine(Configuration config)
@@ -92,14 +93,17 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 
 	// si on ne touche rien on quitte
 	if (!maScene->intersect(a_Ray,intersection)){
-		return Couleur::black;
+		if(a_Depth==0)
+		return Couleur(1,1,1);
+		else
+			return Couleur::black;
 	}
 
 	//on récupère les informations de matériaux (couleurs)
 	Reflectance refl = intersection.getObjet()->GetReflectance();
 
 	// Initialise couleur de base de l'objet
-	Couleur couleur;
+	Couleur couleur=refl.kE;
 	//puissance du rayons (tend vers l'annulation après réflexion)
 	double restant = 1.0;
 	//mode de fin du rayon
@@ -139,14 +143,10 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 	default://refraction
 		Rayon refrRay;
 		double schlick;
-		bool refracte = calculRefraction(a_Ray, intersection, refrRay, schlick);
+		if(calculRefraction(a_Ray, intersection, refrRay, schlick))
+			couleur += restant*(1-schlick)*refractionPropagation(refrRay,intersection,a_Depth);
 
 		couleur += restant*schlick*reflexionPropagation(a_Ray, intersection, a_Depth);
-
-		if (refracte){
-		couleur += restant*(1-schlick)*refractionPropagation(refrRay,intersection,a_Depth);
-		}
-
 		break;
 	}
 	return couleur;
@@ -158,9 +158,9 @@ Couleur Engine::directeIllumination(Rayon& ray, Intersection& intersection,Refle
 	Lumiere** lumiere = maScene->getLumieres();	
 	//parcourt des lumieres
 for (int i = 0; i < maScene->getNbLumieres(); i++) {
+
 		//le rayon entre l'intersection et la lumiere
-		Rayon shadowRay = lumiere[i]->getShadowRay(intersection.getPoint());
-			
+		Rayon shadowRay = lumiere[i]->getShadowRay(intersection.getPoint());			
 		//si on a pas d'intersection on calcul l'apport de cette lumiere
 		if (!intersectShadowRay(shadowRay)) {
 			vector3 lightIncidence = shadowRay.getDirection();
@@ -168,6 +168,7 @@ for (int i = 0; i < maScene->getNbLumieres(); i++) {
 			if (refl.kD != Couleur::black)//si la composante est diffuse
 				couleur += diffuse(intersection, lightIncidence,lumiere[i]->getIntensity(intersection.getPoint()),refl);
 				
+
 			if (refl.kS != Couleur::black)//si la composante est speculaire
 				couleur += speculaire(intersection, lightIncidence,lumiere[i]->getIntensity(intersection.getPoint()),ray,refl);
 		}
@@ -352,28 +353,30 @@ void Engine::InitRender()
 bool Engine::Render(){
 
 	//ici notre camera
-	vector3 origineCam( 0, 0, -5);
+	vector3 origineCam(this->maScene->getCamera()->getPosition());
 
 	// reset last found primitive pointer
-	int pos = 0;
-	int totalPixels = m_Height*m_Width;
-	int avancement=0,pourcentage =0;
+	int pos = 0, pos1 = 0,totalPixels = m_Height*m_Width,avancement=0,pourcentage =0;
 	Couleur acc;
-	float pasPixel=1.0f/(float)config.nbLancerParPixel;
-
+	float pasPixelX=abs(m_DX)/(float)config.nbLancerParPixel;
+	float pasPixelY=abs(m_DY)/(float)config.nbLancerParPixel;
+	img_color = new Couleur[totalPixels];
 	// Boucle sur les pixel de l'écran
-	for ( int y = 0; y < m_Height; y++ )
-	{
+	// Get the number of processors in this system
+	//int iCPU = omp_get_num_procs();
+	//omp_set_num_threads(iCPU);
+	int x=0;
+	//#pragma omp parallel for private(x)
+	for ( int y = 0; y < m_Height; y++){
 		m_SX = m_WX1;
-		for ( int x = 0; x < m_Width; x++ )
-		{
+		for ( x = 0; x < m_Width; x++ ){
 			// Initialisation de la couleur
-			acc=Couleur::black;
-			//boucle à l'interieur du pixel 
-			for (float k=0; k<1; k+=pasPixel)
-			  for (float l=0; l<1; l+=pasPixel){
+			acc=Couleur::black;		
+			//boucle à l'interieur du pixel	
+			for (float k=0.0; k<abs(m_DY); k+=pasPixelY)
+			  for (float l=0.0; l<abs(m_DX); l+=pasPixelX){
 			//Initialisation rayon
-			vector3 dir = vector3( m_SX+k*pasPixel, m_SY+l*pasPixel,0) - origineCam;
+			vector3 dir = vector3(m_SX+l,m_SY-k,0.0) - origineCam;
 			dir.Normalize();
 			Rayon r(origineCam, dir);
 			 //on procède au calcul 
@@ -387,17 +390,17 @@ bool Engine::Render(){
 			acc.ToRgb();
 
 			m_Dest[pos++] = (int(acc.r) << 16) + (int(acc.g) << 8) + int(acc.b);
+			img_color[pos1] = acc;
 			
+			pos1++;
 			//pixel suivant axe 0X
 			m_SX += m_DX;
-			avancement++;
-			PourcentageAvancement(avancement,totalPixels,pourcentage);
+			PourcentageAvancement(avancement++,totalPixels,pourcentage);
 		}
-		
 		//Pixel suivant axe 0Y
 		m_SY += m_DY;
 	}
-	// all done
+	PourcentageAvancement(totalPixels,totalPixels,pourcentage);
 	return true;
 }
 

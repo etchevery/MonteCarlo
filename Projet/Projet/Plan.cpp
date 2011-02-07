@@ -127,16 +127,20 @@ Intersection Plan::intersect2 (Rayon* r)
 Intersection Plan::intersect (Rayon* r)
   {
 
-    Intersection inter, inter_tmp;
+    Intersection inter, inter_tmp, inter_Sphere;
 
-	inter_tmp=Intersection(this,r, this->u,this->v,this->w);
-
+	vector3 Sommets[4]={this->u,this->v,this->w,this->x};
+	Sphere S(Sommets,4); //sphere englobant du plan
+     
+	inter_Sphere=S.intersect(r);
+	if(inter_Sphere.getDistance()<DBL_MAX){
+		inter_tmp=Intersection(this,r, this->u,this->v,this->w);
 		if(inter_tmp.getDistance()<DBL_MAX){
 			inter=inter_tmp;
 		}else{
 			inter=Intersection(this,r, this->u,this->w,this->x);
 		}
-
+	}
 	inter.setObjet(this);
 	return(inter);
 }
@@ -144,5 +148,5 @@ Intersection Plan::intersect (Rayon* r)
 
 	vector3 Plan::normale()
 	{
-		return (this->v-this->u).vector_product(this->u-this->w);
+		return (this->w-this->u).vector_product(this->v-this->u);
 	}

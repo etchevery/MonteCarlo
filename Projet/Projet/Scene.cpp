@@ -44,6 +44,11 @@ void Scene::chargerScene(const char* pFilename)
 			cpt_obj++;
 			pElem=pElem->NextSiblingElement("Tetraedre");
 		}
+		pElem=hDoc.FirstChildElement("Cube").Element();
+		while (pElem){
+			cpt_obj++;
+			pElem=pElem->NextSiblingElement("Cube");
+		}
 		cout << "Nombre d'objets dans le fichier : "<<cpt_obj<<endl;
 		tab_obj = new Objet*[cpt_obj];
 		nb_obj=cpt_obj;
@@ -92,7 +97,16 @@ void Scene::chargerScene(const char* pFilename)
 			pElem=pElem->NextSiblingElement("Tetraedre");
 			cpt_obj++;
 		}
-
+		//TCube
+		pElem=hDoc.FirstChildElement("Cube").Element();
+		while (pElem){
+			obj_tmp= new Cube();
+			hObj=TiXmlHandle(pElem);
+			obj_tmp->initFromXML(hObj);
+			tab_obj[cpt_obj]=obj_tmp;
+			pElem=pElem->NextSiblingElement("Cube");
+			cpt_obj++;
+		}
 		if(nb_obj=cpt_obj){
 			cout<<"Tous les objets ont été chargés"<<endl;
 		}

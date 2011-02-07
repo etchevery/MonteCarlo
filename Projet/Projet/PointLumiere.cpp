@@ -16,7 +16,7 @@ void PointLumiere::initFromXML(TiXmlHandle hObj){
 	pElem->QueryDoubleAttribute("z", &z);
 
 	this->position.Set(x,y,z);
-	this->falloff[0]=0.2;
+	this->falloff[0]=1.0;
 	this->falloff[1]=0.0;
 	this->falloff[2]=0.0;
 
@@ -37,10 +37,10 @@ Couleur PointLumiere::getIntensity(const vector3& refPoint)
 	return illumination / (c+l+q);
 }
 
-Rayon PointLumiere::getShadowRay(const vector3& startPoint){
-	return Rayon(startPoint,this->getIncidence(startPoint));
+Rayon PointLumiere::getShadowRay(const vector3& pointIntersecte){
+	return Rayon(pointIntersecte,this->getIncidence(pointIntersecte));
 }
 
-vector3 PointLumiere::getIncidence(const vector3 &point) {
-	return position-point;
+vector3 PointLumiere::getIncidence(const vector3 &pointIntersecte) {
+	return position-pointIntersecte;
 }

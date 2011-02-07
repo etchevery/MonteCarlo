@@ -7,6 +7,7 @@
 #include "Materiau.h"
 #include "Couleur.h"
 #include "Lumiere.h"
+
 // -----------------------------------------------------------
 // Engine class definition
 // Raytracer core
@@ -21,6 +22,7 @@ public:
 	void SetTarget( Pixel* a_Dest, int a_Width, int a_Height );
 	Scene* GetScene() { return maScene; }
 	void SetScene(Scene* s){maScene=s;}
+	Couleur* GetImage(){return img_color;};
 	void InitRender();
 	bool Render();
 	void PourcentageAvancement(int avancement,int totalPixels,int& pourcentage);
@@ -64,4 +66,5 @@ protected:
 	Scene* maScene;
 	//Stokage résultat
 	Pixel* m_Dest;
+	Couleur* img_color;
 };

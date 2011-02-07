@@ -19,11 +19,12 @@ private:
 			vector3 Sommets[8]; //sommet du cube
 public :
 	Cube();
-    Cube(vector3 S[6]);
+    Cube(vector3 S[8]);
 	~Cube();
 	
 	vector3* getSommets();
-
+	int getNbSommets(){return 8;};
+	int getNBFacesTriangles(){return 6*2;};
 	void setSommets(vector3 c[8]);
 	void afficher();
 	Intersection intersect (Rayon* r);
