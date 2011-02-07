@@ -57,10 +57,9 @@ vector3 Engine::MonteCarloUniforme(vector3& normale){
 	z = 1 - 2*r3;
 	vector3 rayon(x, y, z);
 
-	if (rayon.Dot(normale) < 0.0)
+	if (rayon.Dot(normale)<0.0)
 		rayon = -rayon;
 
-	
 	rayon.Normalize();
 
 	return rayon;
@@ -95,7 +94,6 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 	if (!maScene->intersect(a_Ray,intersection)){
 		return Couleur::black;
 	}
-
 
 	//on récupère les informations de matériaux (couleurs)
 	Reflectance refl = intersection.getObjet()->GetReflectance();
@@ -217,23 +215,22 @@ Couleur Engine::diffusePropagation(Rayon& ray, Intersection& intersection, int d
 }
 
 Couleur Engine::speculairePropagation(Rayon& ray, Intersection& intersection, int depth){
-	//apport de la composante spécaulaire
+	//reflectance matériau
 	Reflectance refl = intersection.getObjet()->GetReflectance();
+	//nouvelle direction
+	vector3 rayDir = MonteCarlo(intersection.getNormal(), refl.pExp);
+    //creation nouveau rayon 
+	Rayon newRay(intersection.getPoint(),rayDir);
+	//on relance le calcul avec la nouvelle direction
+    Couleur specColor = Raytracer(newRay,depth+1);
+
 	//direction réfléchie
 	vector3 reflexionDir = rayonReflexion(ray.getDirection(),intersection.getNormal());
 	reflexionDir.Normalize();
-	//nouvelle direction
-	vector3 rayDir = MonteCarlo(reflexionDir, refl.pExp);
-    //creation nouveau rayon 
-	Rayon newRay(intersection.getPoint(),rayDir);
-
-	//on relance le calcul avec la nouvelle direction
-    Couleur specColor = Raytracer(newRay,depth+1);
-	//specColor.afficher();
 
 	// brdf = kS(pExp+1)/(2PI)
 	if (config.echantillonType == UNIFORME)// Probablity: 1/(2PI) -- (1/probability)*cos(theta)*brdf*radiancealongray
-		return refl.kS*specColor*pow(rayDir.Dot(reflexionDir),refl.pExp) *(rayDir.Dot(intersection.getNormal())) * (refl.pExp+1) ;
+		return refl.kS*specColor*pow(rayDir.Dot(reflexionDir),refl.pExp)*(rayDir.Dot(intersection.getNormal()))*(refl.pExp+1) ;
 	else// Probability: cos^pExp(theta)*(pExp+1)/(2PI) -- (1/probability)*cos(theta)*brdf*radiancealongray
 		return refl.kS*specColor*(rayDir.Dot(intersection.getNormal()));
 }

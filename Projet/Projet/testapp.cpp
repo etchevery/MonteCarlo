@@ -24,9 +24,9 @@ void initConf(Configuration& config){
 	config.echantillonType=IMPORTANCE;
 	config.indirectLighting=true;
 	config.russianRoulette=false;
-	config.profondeur=2;
-	config.nbLancerParPixel=1;
-	config.filename="Sphere.xml";
+	config.profondeur=5;
+	config.nbLancerParPixel=10;
+	config.filename="Sphere2.xml";
 }
 
 void DrawWindow();

@@ -16,7 +16,7 @@ void PointLumiere::initFromXML(TiXmlHandle hObj){
 	pElem->QueryDoubleAttribute("z", &z);
 
 	this->position.Set(x,y,z);
-	this->falloff[0]=1.0;
+	this->falloff[0]=0.2;
 	this->falloff[1]=0.0;
 	this->falloff[2]=0.0;
 
@@ -30,9 +30,9 @@ Couleur PointLumiere::getIntensity(const vector3& refPoint)
 	l = 0;
 	q = 0;
 	if (falloff[1] != 0 || falloff[2] != 0){
-		double r = (position - refPoint).Length();
-		l = falloff[1]*r;
-		q = falloff[2]*r*r;
+		double dist = (position - refPoint).Length();
+		l = falloff[1]*dist;
+		q = falloff[2]*dist*dist;
 	}
 	return illumination / (c+l+q);
 }

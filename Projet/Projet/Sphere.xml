@@ -1,17 +1,48 @@
 <?xml version="1.0" ?>
 
-<Sphere rayon="3.0" x="0.0" y="0.0" z="4.0">
+<Sphere rayon="0.5" x="-2.0" y="0.0" z="6.0">
+	<Materiau BRDF="Diffuse" Phong="1.0" Refr="1.511">
+			<kD red="0.0" green="0.0" blue="1.0" />
+	</Materiau>
+</Sphere>
+
+<Sphere rayon="0.5" x="-1.0" y="0.0" z="6.0">
+	<Materiau BRDF="Diffuse" Phong="1.0" Refr="1.511">
+			<kD red="0.0" green="0.0" blue="1.0" />
+	</Materiau>
+</Sphere>
+<Sphere rayon="0.5" x="0.0" y="0.0" z="6.0">
+	<Materiau BRDF="Diffuse" Phong="1.0" Refr="1.511">
+			<kD red="0.0" green="0.0" blue="1.0" />
+	</Materiau>
+</Sphere>
+<Sphere rayon="0.5" x="1.0" y="0.0" z="6.0">
+	<Materiau BRDF="Diffuse" Phong="1.0" Refr="1.511">
+			<kD red="0.0" green="0.0" blue="1.0" />
+	</Materiau>
+</Sphere>
+<Sphere rayon="0.5" x="-2.0" y="3.0" z="6.0">
+	<Materiau BRDF="Diffuse" Phong="1.0" Refr="1.511">
+			<kD red="0.0" green="0.0" blue="1.0" />
+	</Materiau>
+</Sphere>
+<Sphere rayon="0.5" x="-1.0" y="3.0" z="6.0">
+	<Materiau BRDF="Diffuse" Phong="1.0" Refr="1.511">
+			<kD red="0.0" green="0.0" blue="1.0" />
+	</Materiau>
+</Sphere>
+<Sphere rayon="0.5" x="0.0" y="3.0" z="6.0">
+	<Materiau BRDF="Diffuse" Phong="1.0" Refr="1.511">
+			<kD red="0.0" green="0.0" blue="1.0" />
+	</Materiau>
+</Sphere>
+<Sphere rayon="0.5" x="1.0" y="3.0" z="6.0">
 	<Materiau BRDF="Diffuse" Phong="1.0" Refr="1.511">
 			<kD red="0.0" green="0.0" blue="1.0" />
 	</Materiau>
 </Sphere>
 
 
-<Sphere rayon="1.0" x="0.0" y="0.0" z="1.0">
-	<Materiau BRDF="Dielectric" Phong="1.0" Refr="1.511">
-			<kT red="1.0" green="1.0" blue="0.0" />
-	</Materiau>
-</Sphere>
 
 
 <Camera x_pos="1.0" y_pos="0.1" z_pos="0.5" x_look="1.0" y_look="1.0" z_look="1.0"/>
