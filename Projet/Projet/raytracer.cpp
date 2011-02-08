@@ -102,8 +102,8 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 	//on récupère les informations de matériaux (couleurs)
 	Reflectance refl = intersection.getObjet()->GetReflectance();
 
-	// Initialise couleur de base de l'objet
-	Couleur couleur=refl.kE;
+	
+	Couleur couleur;
 	//puissance du rayons (tend vers l'annulation après réflexion)
 	double restant = 1.0;
 	//mode de fin du rayon
@@ -121,7 +121,8 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 		}else //mode de terminaison sur la profondeur
 		return couleur;
 	}
-
+	// Initialise couleur de base de l'objet
+	couleur=refl.kE;
 	//selon le type de materiaux
 	switch(refl.type){
 	case Diffuse:
@@ -146,7 +147,9 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 		if(calculRefraction(a_Ray, intersection, refrRay, schlick))
 			couleur += restant*(1-schlick)*refractionPropagation(refrRay,intersection,a_Depth);
 
-		couleur += restant*schlick*reflexionPropagation(a_Ray, intersection, a_Depth);
+		//couleur += restant*schlick*reflexionPropagation(a_Ray, intersection, a_Depth);
+
+		//couleur.afficher();
 		break;
 	}
 	return couleur;
@@ -336,7 +339,7 @@ double Engine::calculSchlick(double n, double nt, vector3& rayDir, vector3& refr
 
 Couleur Engine::refractionPropagation(Rayon& ray,Intersection& intersection, int depth) {
 	Couleur coef = intersection.getObjet()->GetReflectance().kT;
-	return coef * Raytracer(ray, depth+1);
+	return coef * Raytracer(ray, depth);
 }
 // -----------------------------------------------------------
 // Engine::InitRender
@@ -373,9 +376,10 @@ bool Engine::Render(){
 	int iCPU = omp_get_num_procs();
 	omp_set_num_threads(iCPU);
 	int x=0;
-	//#pragma omp parallel shared(m_Height) private(x){
+	
 	for ( int y = 0; y < m_Height; y++){
 		m_SX = m_WX1;
+		//#pragma omp parallel for ordered schedule(static, 5)
 		for ( x = 0; x < m_Width; x++ ){
 			// Initialisation de la couleur
 			acc=Couleur::black;		
@@ -395,7 +399,8 @@ bool Engine::Render(){
 			acc.clamp();
 			//transformation en RGB standard
 			acc.ToRgb();
-
+	
+			//#pragma omp ordered
 			m_Dest[pos++] = (int(acc.r) << 16) + (int(acc.g) << 8) + int(acc.b);
 			img_color[pos1] = acc;
 			
