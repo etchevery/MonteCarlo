@@ -37,7 +37,7 @@ Couleur Raytracer( Rayon& ,int );
 	bool rouletteRusse(const Couleur&,double&);//roulette russe normale
     bool glossyRoulette(const Couleur& kS, const Couleur& kD, double& puissanceRestant);//choix surface glossy: spec ou diffus?
 //intersection avec les lumières
-	bool intersectShadowRay(Rayon& ray);
+	bool intersectShadowRay(Rayon& ray,double distance);
 
 // Illumination directe
 	Couleur directeIllumination( Rayon& ,Intersection& ,Reflectance);

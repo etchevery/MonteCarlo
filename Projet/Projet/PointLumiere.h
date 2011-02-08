@@ -15,6 +15,7 @@ class PointLumiere: public Lumiere {
 		Couleur getIntensity(const vector3& refPoint);
 		void initFromXML(TiXmlHandle hObj);
 		void afficher();
+		vector3 getPosition(){return position;};
 	private:
 		vector3 position;
 		vector3 getIncidence(const vector3 &point);

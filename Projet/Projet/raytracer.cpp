@@ -160,9 +160,10 @@ Couleur Engine::directeIllumination(Rayon& ray, Intersection& intersection,Refle
 for (int i = 0; i < maScene->getNbLumieres(); i++) {
 	//intersection.afficher();
 		//le rayon entre l'intersection et la lumiere
-		Rayon shadowRay = lumiere[i]->getShadowRay(intersection.getPoint());			
+		Rayon shadowRay = lumiere[i]->getShadowRay(intersection.getPoint());
+		double distance=(((PointLumiere*)lumiere[i])->getPosition()-intersection.getPoint()).Length();
 		//si on a pas d'intersection on calcul l'apport de cette lumiere
-		if (!intersectShadowRay(shadowRay)) {
+		if (!intersectShadowRay(shadowRay,distance)) {
 			vector3 lightIncidence = shadowRay.getDirection();
 			lightIncidence.Normalize();
 			if (refl.kD != Couleur::black)//si la composante est diffuse
@@ -176,9 +177,13 @@ for (int i = 0; i < maScene->getNbLumieres(); i++) {
 }
 
 //intersection entre un rayon d'ombre et un objet
-bool Engine::intersectShadowRay(Rayon& ray) {
+bool Engine::intersectShadowRay(Rayon& ray,double distance) {
 	Intersection rec;
 	bool test=maScene->intersect(ray,rec);
+
+	if(test&&rec.getDistance()>distance)
+		test=false;
+
 	return(test);
 }
 
@@ -186,6 +191,8 @@ bool Engine::intersectShadowRay(Rayon& ray) {
 Couleur Engine::diffuse( Intersection& intersection, const vector3& incidence, const Couleur& color,Reflectance refl) {
 	vector3 normale(intersection.getNormal());
 	vector3 incidant(incidence);
+	//if(normale.Dot(incidant)<0.0)
+	//cout<<normale.Dot(incidant);
 	return refl.kD*color*MAX(normale.Dot(incidant),0.0);
 }
 
