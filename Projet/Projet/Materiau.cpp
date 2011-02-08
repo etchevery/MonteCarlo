@@ -11,7 +11,6 @@ Materiau::Materiau(void)
 void Materiau::initFromXML(TiXmlHandle hObj){
 	TiXmlElement* pElem=hObj.FirstChildElement("Materiau").Element();
 	double phong,refr;
-	cout << "Init materiau " <<pElem->Value()<<endl;
 	
 	const char* brdf = pElem->Attribute("BRDF");
 	if (strcmp(brdf,"Emissive")==0){

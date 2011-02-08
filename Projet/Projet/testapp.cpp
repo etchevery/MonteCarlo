@@ -38,10 +38,10 @@ Surface* surface=0;
 void initConf(Configuration& config){
 	config.directLighting=true;
 	config.indirectLighting=true;
-	config.echantillonType=UNIFORME;
+	config.echantillonType=IMPORTANCE;
 	config.russianRoulette=false;
-	config.profondeur=0;
-	config.nbLancerParPixel=1;
+	config.profondeur=1;
+	config.nbLancerParPixel=5;
 	config.filename="Salle.xml";
 }
 
@@ -178,31 +178,19 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	maScene->chargerScene(config.filename);
 	maScene->afficherScene();
 
-	/*
-	vector3 Sommets[8];
-	Rayon RS=Rayon(0.0,3.0,0.0,0.0,-1.0,0.0);
-	Sommets[0]=vector3(-1.0,1.0,1.0);Sommets[1]=vector3(1.0,1.0,1.0);
-	Sommets[2]=vector3(1.0,-1.0,1.0);Sommets[3]=vector3(-1.0,-1.0,1.0);
-	Sommets[4]=vector3(-1.0,1.0,-1.0);Sommets[5]=vector3(1.0,1.0,-1.0);
-	Sommets[6]=vector3(1.0,-1.0,-1.0);Sommets[7]=vector3(-1.0,-1.0,-1.0);
-	Cube C(Sommets);
-	Intersection I=C.intersect(&RS);
-	I.afficher();*/
-
 	tracer = new Engine(config);
 	tracer->SetScene(maScene);
 	tracer->SetTarget(surface->GetBuffer(),SCRWIDTH, SCRHEIGHT );
 	int tpos = 60;
-	maScene->afficherScene();
 
 	clock_scene.end(); // ---> end clock_scene		
 
 	system("Pause");
-	// go
-	clock_render.begin(); // ---> start clock_render
+
+	
 		tracer->InitRender();
-		//La fonction à chronométrer
-		tracer->Render();
+	clock_render.begin(); // ---> start clock_render
+		tracer->Render(); //calcul de l'image
 	clock_render.end(); // ---> end clock_render
 
 	SaveImage("test.ppm",tracer->GetImage());
@@ -214,11 +202,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	{
 		DrawWindow();
 	}
-	
-	system("PAUSE");
 
 FreeConsole();  // Close the console window
-
 
 	return 1;
 }

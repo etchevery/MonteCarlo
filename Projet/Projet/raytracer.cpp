@@ -104,18 +104,19 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 
 	
 	Couleur couleur;
-	//puissance du rayons (tend vers l'annulation après réflexion)
-	double restant = 1.0;
-	//mode de fin du rayon
-	if (a_Depth > config.profondeur){
-		if(config.russianRoulette){//roulette russe
-		Couleur poids;
+	Couleur poids;
 		switch(refl.type){
 		case Diffuse:	 poids = refl.kD; break;//diffus
 		case Glossy: poids = refl.kD + refl.kS; break;//glossy
 		case Mirror: poids = refl.kR; break;//reflexion
 		default:  poids = refl.kT; break;//refraction
 		}
+	//puissance du rayons (tend vers l'annulation après réflexion)
+	double restant = 1.0;
+	//mode de fin du rayon
+	if (a_Depth > config.profondeur){
+		if(config.russianRoulette){//roulette russe
+		
 		if (rouletteRusse(poids, restant))
 			return couleur;
 		}else //mode de terminaison sur la profondeur
@@ -123,6 +124,8 @@ Couleur Engine::Raytracer( Rayon& a_Ray, int a_Depth){
 	}
 	// Initialise couleur de base de l'objet
 	couleur=refl.kE;
+	if(a_Depth>0)
+	rouletteRusse(poids, restant);
 	//selon le type de materiaux
 	switch(refl.type){
 	case Diffuse:
@@ -256,7 +259,7 @@ Couleur Engine::reflexionPropagation(Rayon& ray, Intersection& intersection, int
 	//nouveau rayon aprés réflexion
 	Rayon newRayon(intersection.getPoint(),reflectDirection);
 	//on relance
-	reflColor = Raytracer(newRayon,depth+1);
+	reflColor = Raytracer(newRayon,depth);
 
 	if (refl.kT == Couleur::black)
 		return refl.kR*reflColor;

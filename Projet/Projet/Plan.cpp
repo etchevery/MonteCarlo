@@ -6,6 +6,7 @@ Plan::Plan(){
 	this->u=vector3();
 	this->v=vector3();
 	this->w=vector3();
+	this->x=vector3();
 }
 
 

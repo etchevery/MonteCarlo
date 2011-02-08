@@ -60,5 +60,20 @@
 	</Materiau>
 </Sphere>
 
-<Camera x_pos="0.0" y_pos="0.0" z_pos="-5.0" x_look="0.0" y_look="0.0" z_look="0.0"/>
+<Sphere rayon="0.6" x="-5.0" y="0.0" z="1.5">
+	<Materiau BRDF="Glossy" Phong="10.0">
+			<kS red="1.0" green="1.0" blue="1.0" />
+			<kD red="0.7" green="0.0" blue="0.0" />
+			<kE red="0.1" green="0.0" blue="0.0" />
+	</Materiau>
+</Sphere>
+
+
+<Sphere rayon="1.0" x="-2.0" y="1.0" z="4.5">
+	<Materiau BRDF="Mirror" Refr="1.55">
+			<kR red="1.0" green="1.0" blue="1.0" />
+	</Materiau>
+</Sphere>
+
+<Camera x_pos="1.0" y_pos="0.0" z_pos="-5.0" x_look="0.0" y_look="0.0" z_look="0.0"/>
 <Lumiere type="point" red="1.0" green="1.0" blue="1.0" x="0.0" y="2.0" z="0.0"/>

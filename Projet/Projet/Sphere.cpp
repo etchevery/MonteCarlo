@@ -25,7 +25,6 @@ Sphere::~Sphere(){
 
 void Sphere::initFromXML(TiXmlHandle hObj){
 	double rayon,x,y,z;
-	cout<<"Init sphere from xml"<<endl;
 	Objet::initFromXML(hObj);
 	TiXmlElement* pElem=hObj.Element();
 
