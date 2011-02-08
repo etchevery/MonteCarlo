@@ -48,7 +48,7 @@
 		return this->Faces;
 	}
 
-	vector3* Polygone::getFaces(int i){
+/*	vector3* Polygone::getFaces(int i){
 		vector3 tmp[3];
 		//if(i<0 || i>=this->nbFaces);
 
@@ -57,7 +57,7 @@
 		}
 
 		return tmp;
-	}
+	}*/
 
 	int Polygone::getNbFaces(){
 		return this->nbFaces;

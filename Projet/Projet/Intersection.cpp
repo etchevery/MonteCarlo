@@ -36,6 +36,8 @@
 	double dy=r->getDirection().y; double py=r->getPosition().y;
 	double dz=r->getDirection().z; double pz=r->getPosition().z;
 
+		clock_intersect_triangle.begin(); // ---> start clock_intersect_triangle
+
 	vector3 E;
 	vector3 AB=B-A; //vecteur AB
 	vector3 AC=C-A; //vecteur AC
@@ -59,7 +61,7 @@
 			}else{
 				t=f*AC.Dot(E);
 				if(t>EPSILON){  //intersection 
-					this->point= vector3(t * dx + pz,t * dy + py,t * dz + pz);
+					this->point= vector3(t * dx + px,t * dy + py,t * dz + pz);
 					this->distance=(this->point-r->getPosition()).Length() ;
 					vector3 N=AB.vector_product(AC);
 					N.Normalize();
@@ -70,6 +72,8 @@
 			}
 		}
 	}
+	clock_intersect_triangle.end(); // ---> end clock_intersect_triangle
+
 }
 
 	Intersection::~Intersection()

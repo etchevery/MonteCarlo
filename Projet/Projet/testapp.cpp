@@ -3,9 +3,22 @@
 #include "raytracer.h"
 #include "surface.h"
 #include "Config.h"
-
 #include <Windows.h>
 #include <time.h>
+#include "timing.h"
+
+//definition des clocks 
+TIMING::CpuTime clock_intersect_plan("intersect_plan", -1, 5);
+TIMING::CpuTime clock_intersect_sphere("intersect_sphere", -1, 5);
+TIMING::CpuTime clock_intersect_cube("intersect_cube", -1, 5);
+TIMING::CpuTime clock_intersect_triangle("intersect_triangle", -1, 5);
+TIMING::CpuTime clock_intersect_cylindre("intersect_cylindre", -1, 5);
+TIMING::CpuTime clock_intersect_tetraedre("intersect_tetraedre", -1, 5);
+TIMING::CpuTime clock_intersect_program("intersect_program", -1, 5);
+TIMING::CpuTime clock_scene("scene", -1, 5);
+TIMING::CpuTime clock_render("render", -1, 5);
+
+
 
 #define SCRWIDTH	400
 #define SCRHEIGHT	300
@@ -33,7 +46,7 @@ void initConf(Configuration& config){
 }
 
 void SaveImage(const char* NomFichier,Couleur* img){
-	FILE *out =fopen(NomFichier,"w" ); 
+	FILE *out=fopen(NomFichier,"w" ); 
 	int i; 
 	fprintf(out,"P3\n");
 	fprintf(out,"%d",SCRWIDTH);
@@ -47,7 +60,7 @@ void SaveImage(const char* NomFichier,Couleur* img){
 	fclose(out); 
 }
 
-void SaveLogFile(const char* NomFichier,Configuration config, double duree){
+void SaveLogFile(const char* NomFichier,Configuration config){
 	FILE *out =fopen(NomFichier,"w" ); 
 	
 	fprintf(out,"Stockage des resultats\n\n");
@@ -64,8 +77,30 @@ void SaveLogFile(const char* NomFichier,Configuration config, double duree){
 	fprintf(out,"-Fichier testé : %s\n",config.filename);
 	fprintf(out,"-Nombre de lancers de rayons pour chaque pixel : %d\n",config.nbLancerParPixel);
 	fprintf(out,"-Profondeur : %d\n",config.profondeur);
-	fprintf(out,"-Temps d'exécution de la fonction Render(): %f secondes\n",duree);
+	fprintf(out,"-Temps d'exécution: \n");
+	//on joute les times dans le fichiers
+	clock_intersect_plan.printToFile(out);
+	clock_intersect_sphere.printToFile(out);
+	clock_intersect_cube.printToFile(out);
+	clock_intersect_triangle.printToFile(out);
+	clock_intersect_cylindre.printToFile(out);
+	clock_intersect_tetraedre.printToFile(out);
+	clock_intersect_program.printToFile(out);
+	clock_scene.printToFile(out);
+	clock_render.printToFile(out);
 	fclose(out); 
+}
+
+void afficherClock(){
+	clock_intersect_plan.print();
+	clock_intersect_sphere.print();
+	clock_intersect_cube.print();
+	clock_intersect_triangle.print();
+	clock_intersect_cylindre.print();
+	clock_intersect_tetraedre.print();
+	clock_intersect_program.print();
+	clock_scene.print();
+	clock_render.print();
 }
 void DrawWindow();
 
@@ -95,6 +130,7 @@ static LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 
 int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nCmdShow)
 {
+
 	RECT rect;
 	int cc;
 	wc.style = CS_OWNDC | CS_VREDRAW | CS_HREDRAW;
@@ -135,6 +171,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	freopen("CONOUT$","wb",stdout);
 
 
+	clock_scene.begin(); // ---> start clock_scene
+
 	// prepare renderer
 	Scene* maScene = new Scene();
 	maScene->chargerScene(config.filename);
@@ -156,26 +194,22 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	tracer->SetTarget(surface->GetBuffer(),SCRWIDTH, SCRHEIGHT );
 	int tpos = 60;
 	maScene->afficherScene();
-		
+
+	clock_scene.end(); // ---> end clock_scene		
 
 	system("Pause");
 	// go
-	tracer->InitRender();
-	clock_t debut, fin;
-	double duree;
-	debut=clock();
-
-	//La fonction à chronométrer
-	tracer->Render();
-
-	
-	fin=clock();
-	
-	duree=(fin - debut) / CLOCKS_PER_SEC;
+	clock_render.begin(); // ---> start clock_render
+		tracer->InitRender();
+		//La fonction à chronométrer
+		tracer->Render();
+	clock_render.end(); // ---> end clock_render
 
 	SaveImage("test.ppm",tracer->GetImage());
 	
-	SaveLogFile("Resultat.log",config,duree);
+	SaveLogFile("Resultat.log",config);
+	afficherClock();
+
 	while (1)
 	{
 		DrawWindow();
@@ -184,6 +218,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine
 	system("PAUSE");
 
 FreeConsole();  // Close the console window
+
+
 	return 1;
 }
 

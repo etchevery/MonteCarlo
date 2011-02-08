@@ -84,6 +84,7 @@
     <ClInclude Include="common.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Couleur.h" />
+    <ClInclude Include="CpuTime.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Cylindre.h" />
     <ClInclude Include="Intersection.h" />
@@ -101,9 +102,11 @@
     <ClInclude Include="surface.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tetraedre.h" />
+    <ClInclude Include="timing.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Couleur.cpp" />
+    <ClCompile Include="CpuTime.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Cylindre.cpp" />
     <ClCompile Include="Intersection.cpp" />

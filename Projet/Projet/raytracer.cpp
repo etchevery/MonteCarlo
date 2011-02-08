@@ -158,7 +158,7 @@ Couleur Engine::directeIllumination(Rayon& ray, Intersection& intersection,Refle
 	Lumiere** lumiere = maScene->getLumieres();	
 	//parcourt des lumieres
 for (int i = 0; i < maScene->getNbLumieres(); i++) {
-
+	//intersection.afficher();
 		//le rayon entre l'intersection et la lumiere
 		Rayon shadowRay = lumiere[i]->getShadowRay(intersection.getPoint());			
 		//si on a pas d'intersection on calcul l'apport de cette lumiere
@@ -168,7 +168,6 @@ for (int i = 0; i < maScene->getNbLumieres(); i++) {
 			if (refl.kD != Couleur::black)//si la composante est diffuse
 				couleur += diffuse(intersection, lightIncidence,lumiere[i]->getIntensity(intersection.getPoint()),refl);
 				
-
 			if (refl.kS != Couleur::black)//si la composante est speculaire
 				couleur += speculaire(intersection, lightIncidence,lumiere[i]->getIntensity(intersection.getPoint()),ray,refl);
 		}
@@ -179,7 +178,8 @@ for (int i = 0; i < maScene->getNbLumieres(); i++) {
 //intersection entre un rayon d'ombre et un objet
 bool Engine::intersectShadowRay(Rayon& ray) {
 	Intersection rec;
-	return(maScene->intersect(ray,rec));
+	bool test=maScene->intersect(ray,rec);
+	return(test);
 }
 
 //calcul de la composante diffuse éclairage direct
@@ -363,10 +363,10 @@ bool Engine::Render(){
 	img_color = new Couleur[totalPixels];
 	// Boucle sur les pixel de l'écran
 	// Get the number of processors in this system
-	//int iCPU = omp_get_num_procs();
-	//omp_set_num_threads(iCPU);
+	int iCPU = omp_get_num_procs();
+	omp_set_num_threads(iCPU);
 	int x=0;
-	//#pragma omp parallel for private(x)
+	//#pragma omp parallel shared(m_Height) private(x){
 	for ( int y = 0; y < m_Height; y++){
 		m_SX = m_WX1;
 		for ( x = 0; x < m_Width; x++ ){
@@ -400,6 +400,7 @@ bool Engine::Render(){
 		//Pixel suivant axe 0Y
 		m_SY += m_DY;
 	}
+
 	PourcentageAvancement(totalPixels,totalPixels,pourcentage);
 	return true;
 }

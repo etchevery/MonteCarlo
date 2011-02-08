@@ -50,17 +50,18 @@ Cube::Cube(void)
 	}
 
 
+	/*	Sphere S(this->Sommets,4); //sphere englobant le cube 
+	Intersection inter_Sphere=S.intersect(r);
+	if(inter_Sphere.getDistance()<DBL_MAX){*/
+
 	//cube est une composition de 12 triangles
 	Intersection Cube::intersect(Rayon* r)
 {
-    Intersection inter, inter_tmp, inter_face, inter_Sphere;
+    Intersection inter, inter_tmp, inter_face;
 	vector3 A,B,C;
     //Liste des faces: ligne=numero face, colonne=numero sommet
 	int FacesTriangle[12][3];
-	Sphere S(this->Sommets,4); //sphere englobant le cube 
-	inter_Sphere=S.intersect(r);
 
-	if(inter_Sphere.getDistance()<DBL_MAX){
 		//Face Carré 1
 		FacesTriangle[0][0]=1;FacesTriangle[0][1]=2;FacesTriangle[0][2]=3;
 		FacesTriangle[1][0]=1;FacesTriangle[1][1]=4;FacesTriangle[1][2]=3;
@@ -80,6 +81,7 @@ Cube::Cube(void)
 		FacesTriangle[10][0]=1;FacesTriangle[10][1]=2;FacesTriangle[10][2]=6;
 		FacesTriangle[11][0]=1;FacesTriangle[11][1]=5;FacesTriangle[11][2]=6;
 		
+		clock_intersect_cube.begin(); // ---> start clock_intersect_cube
 
 			double d_min=DBL_MAX; 
 
@@ -103,8 +105,10 @@ Cube::Cube(void)
 				}
 				j++; //on passe à un autre face
 			}
-	}
-
+	
 	inter.setObjet(this);
+
+		clock_intersect_cube.end(); // ---> end clock_intersect_cube
+
 	return(inter);
   }

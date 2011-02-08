@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Intersection.h"
 #include "Rayon.h"
+#include "timing.h"
 
 using namespace std;
 
@@ -36,7 +37,6 @@ public :
 	void afficher();
 
 	Intersection intersect(Rayon* r);
-	Intersection intersect2(Rayon* r);
 	vector3 normale(vector3 p);
 	Sphere(vector3 Sommets[], int n); //volume englobante
 };

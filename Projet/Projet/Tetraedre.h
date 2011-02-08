@@ -4,7 +4,7 @@
 #include "Intersection.h"
 #include "Rayon.h"
 #include "common.h"
-
+#include "timing.h"
 
 
 using namespace std;
